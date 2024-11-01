@@ -1,0 +1,39 @@
+{% set version = "1.0.0" %}
+
+package:
+  name: grass
+  version: {{ version }}
+
+source:
+  url: file:///home/kandeln/grass.zip
+  #  sha256: 763765827454ec0c9b5eb47e4d53335e6b2b344d7f63390ef074f2b06e1cb61d
+
+build:
+  number: 0
+  string: letstest
+
+requiements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+    - cmake
+    - make # [unix]
+    #- msbuild # [win]
+  host:
+    - proj
+    - libgdal
+    - fftw
+    - blas
+    - libpdal
+    - wxpython
+
+about:
+  home: https://grass.osgeo.org/
+  license: GPL 2+
+  summary: GRASS GIS (https://grass.osgeo.org/) is a Geographic Information System used for geospatial data management and analysis, image processing, graphics/map production, spatial modeling, and visualization.
+  dev_url: https://github.com/OSGeo/grass
+  doc_url: https://grass.osgeo.org/grass-stable/manuals/index.html
+
+extra:
+  maintainers:
+    - HuidaeCho

@@ -1,0 +1,10 @@
+#!/bin/sh
+mkdir build
+cd build
+
+
+echo ================== $(which make)
+echo ================== $(which cmake)
+
+
+
