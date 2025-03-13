@@ -1,0 +1,72 @@
+Adding in variants from internal_defaults
+WARNING: No numpy version specified in conda_build_config.yaml.  Falling back to default numpy value of 1.26
+Attempting to finalize metadata for grass
+/home/kandeln/usr/local/opt/miniconda/envs/tenv/conda-bld/grass_1741280294713/work/conda_build.sh: line 13: cmake: command not found
+BUILD START: ['grass-1.0.0-0.conda']
+
+Rendered as:
+```yaml
+package:
+  name: grass
+  version: 1.0.0
+build: {}
+requirements:
+  build: []
+  run: []
+about: {}
+extra:
+  copy_test_source_files: true
+  final: true
+```
+
+source tree in: /home/kandeln/usr/local/opt/miniconda/envs/tenv/conda-bld/grass_1741280294713/work
+export PREFIX=/home/kandeln/usr/local/opt/miniconda/envs/tenv/conda-bld/grass_1741280294713/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_
+export SRC_DIR=/home/kandeln/usr/local/opt/miniconda/envs/tenv/conda-bld/grass_1741280294713/work
+Traceback (most recent call last):
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/build.py", line 2557, in build
+    utils.check_call_env(
+    ~~~~~~~~~~~~~~~~~~~~^
+        cmd,
+        ^^^^
+    ...<3 lines>...
+        stats=build_stats,
+        ^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/utils.py", line 406, in check_call_env
+    return _func_defaulting_env_to_os_environ("call", *popenargs, **kwargs)
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/utils.py", line 382, in _func_defaulting_env_to_os_environ
+    raise subprocess.CalledProcessError(proc.returncode, _args)
+subprocess.CalledProcessError: Command '['/bin/bash', '-o', 'errexit', '/home/kandeln/usr/local/opt/miniconda/envs/tenv/conda-bld/grass_1741280294713/work/conda_build.sh']' returned non-zero exit status 127.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/bin/conda-build", line 11, in <module>
+    sys.exit(execute())
+             ~~~~~~~^^
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/cli/main_build.py", line 622, in execute
+    api.build(
+    ~~~~~~~~~^
+        parsed.recipe,
+        ^^^^^^^^^^^^^^
+    ...<8 lines>...
+        cache_dir=parsed.cache_dir,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/api.py", line 211, in build
+    return build_tree(
+        recipes,
+    ...<7 lines>...
+        variants=variants,
+    )
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/build.py", line 3656, in build_tree
+    packages_from_this = build(
+        metadata,
+    ...<5 lines>...
+        notest=notest,
+    )
+  File "/home/kandeln/usr/local/opt/miniconda/envs/tenv/lib/python3.13/site-packages/conda_build/build.py", line 2565, in build
+    raise BuildScriptException(str(exc), caused_by=exc) from exc
+conda_build.exceptions.BuildScriptException: Command '['/bin/bash', '-o', 'errexit', '/home/kandeln/usr/local/opt/miniconda/envs/tenv/conda-bld/grass_1741280294713/work/conda_build.sh']' returned non-zero exit status 127.
