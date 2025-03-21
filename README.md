@@ -22,7 +22,7 @@ git clone https://github.com/HuidaeCho/grass-conda.git
 4. Build and package GRASS
 ```bash
 cd grass-conda
-grass-build recipe
+conda-build recipe
 ```
 5. Find a new GRASS package
 ```bash
