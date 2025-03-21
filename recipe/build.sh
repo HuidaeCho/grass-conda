@@ -1,11 +1,9 @@
 #!/bin/sh
-#rm -rf build
-#mkdir build
+rm -rf build
+mkdir build
 cd build
 
-#cmake .. > cmake.log
-#make -j$(nproc) > make.log
+cmake .. > cmake.log
+make -j$(nproc) > make.log
 
 cp -a output/* $PREFIX
-
-#cp -a *.log /tmp
