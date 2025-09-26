@@ -7,6 +7,8 @@ cmake .. > cmake.log
 make -j$(nproc) > make.log
 
 cp -a output/* $PREFIX
+mv $PREFIX/lib64 $PREFIX/opt
+mv $PREFIX/opt/grass85 $PREFIX/opt/grass
 
 compile_path=$(echo $PREFIX | sed -E "s#_h_env_placehold[^/]+#work/build/output#")
 

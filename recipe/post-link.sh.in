@@ -1,4 +1,11 @@
 #!/bin/sh
-for file in bin/grass lib64/grass85/etc/python/grass/app/resource_paths.py etc/fontcap; do
-	sed -Ei "s#@compile_path@#$PREFIX#g" $PREFIX/$file
+for file in \
+	bin/grass \
+	opt/grass/etc/python/grass/app/resource_paths.py \
+	opt/grass/etc/fontcap \
+	; do
+	sed -Ei \
+		-e "s#@compile_path@#$PREFIX#g" \
+		-e "s#lib64/grass85#opt/grass#g" \
+		$PREFIX/$file
 done
