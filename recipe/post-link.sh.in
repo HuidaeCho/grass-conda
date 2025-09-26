@@ -1,0 +1,4 @@
+#!/bin/sh
+for file in bin/grass lib64/grass85/etc/python/grass/app/resource_paths.py etc/fontcap; do
+	sed -Ei "s#@compile_path@#$PREFIX#g" $PREFIX/$file
+done
