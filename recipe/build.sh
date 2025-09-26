@@ -8,5 +8,7 @@ make -j$(nproc) > make.log
 
 cp -a output/* $PREFIX
 
-sed "s#@compile_path@#$PREFIX#g" < $RECIPE_DIR/post-link.sh.in > $PREFIX/.conda/post-link.sh
-chmod +x $PREFIX/.conda/post-link.sh
+compile_path=$(echo $PREFIX | sed -E "s#_h_env_placehold[^/]+#work/build/output#")
+
+sed "s#@compile_path@#$compile_path#g" < $RECIPE_DIR/post-link.sh.in > $PREFIX/bin/.grass-post-link.sh
+chmod +x $PREFIX/bin/.grass-post-link.sh
