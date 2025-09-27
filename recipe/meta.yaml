@@ -6,7 +6,8 @@ package:
 
 source:
   git_url: https://github.com/OSGeo/grass.git
-#  path: /home/hcho/usr/grass/grass
+  # path: /home/hcho/usr/grass/grass
+  # path: C:/opt/grass
 
 build:
   number: 0
@@ -16,43 +17,50 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - cmake
-    - make # [unix]
     - pkg-config
-    #- msbuild # [win]
+    - make  # [unix]
   host:
-    - flex
-    - bison
     - proj
-    - gdal
-    - xorg-libx11
-    - xorg-xproto
-    - libopengl
-    - libgl-devel
-    - cairo
-    - postgresql
-    - gettext
     - fftw
     - openblas
     - pdal
-    - libglu
     - wxpython
+    - flex  # [unix]
+    - bison # [unix]
+    - gdal  # [unix]
+    - xorg-libx11  # [unix]
+    - xorg-xproto  # [unix]
+    - libopengl # [unix]
+    - libgl-devel  # [unix]
+    - cairo # [unix]
+    - postgresql  # [unix]
+    - gettext  # [unix]
+    - libglu  # [unix]
+    - winflexbison # [win]
+    - libgdal  # [win]
+    - pcre # [win]
+    - pywin32 # [win]
   run:
-    - flex
-    - bison
     - proj
-    - gdal
-    - xorg-libx11
-    - xorg-xproto
-    - libopengl
-    - libgl-devel
-    - cairo
-    - postgresql
-    - gettext
     - fftw
     - openblas
     - pdal
-    - libglu
     - wxpython
+    - flex  # [unix]
+    - bison # [unix]
+    - gdal  # [unix]
+    - xorg-libx11  # [unix]
+    - xorg-xproto  # [unix]
+    - libopengl # [unix]
+    - libgl-devel  # [unix]
+    - cairo # [unix]
+    - postgresql  # [unix]
+    - gettext  # [unix]
+    - libglu  # [unix]
+    - winflexbison # [win]
+    - libgdal  # [win]
+    - pcre # [win]
+    - pywin32 # [win]
 
 about:
   home: https://grass.osgeo.org/
