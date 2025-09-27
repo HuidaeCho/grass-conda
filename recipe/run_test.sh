@@ -1,9 +1,2 @@
-#! /bin/bash
-
-# grass
-
-# g.gui
-
-echo '======================== Hello from the test ============='
-
-
+#!/bin/sh
+grass --exec g.proj -p
