@@ -24,6 +24,14 @@ git clone https://github.com/HuidaeCho/grass-conda.git
 cd grass-conda
 conda-build recipe
 ```
+
+If it is on WSL, there may have issue with spaces in PATH environment variable, we can get rid of them before building with 
+
+```bash
+PATH="$CONDA_PREFIX/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+```
+
+
 5. Find a new GRASS package
 ```bash
 ls -al ~/opt/miniconda/envs/grass-conda/conda-bld/linux-64/grass-1.0.0-h3fd9d12_0.conda
@@ -37,4 +45,5 @@ conda install grass -c ~/opt/miniconda/envs/grass-conda/conda-bld
 7. See if GRASS is installed
 ```bash
 ls -al ~/opt/miniconda/envs/grass-conda-test/bin/grass
+grass
 ```
