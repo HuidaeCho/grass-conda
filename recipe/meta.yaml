@@ -25,9 +25,8 @@ requirements:
     - proj
     - gdal
     - xorg-libx11
-    - xorg-xproto
-    - libopengl
-    - libgl-devel
+    - xorg-xorgproto
+    - mesalib
     - cairo
     - postgresql
     - gettext
@@ -42,9 +41,8 @@ requirements:
     - proj
     - gdal
     - xorg-libx11
-    - xorg-xproto
-    - libopengl
-    - libgl-devel
+    - xorg-xorgproto
+    - mesalib
     - cairo
     - postgresql
     - gettext

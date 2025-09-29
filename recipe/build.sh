@@ -1,14 +1,41 @@
 #!/bin/sh
+
+# Configure git with better timeout settings for network issues
+git config --global http.timeout 600
+git config --global http.lowSpeedLimit 1000
+git config --global http.lowSpeedTime 300
+
 rm -rf build
 mkdir build
 cd build
 
-cmake .. > cmake.log
-make -j$(nproc) > make.log
+cmake .. -DCMAKE_INSTALL_PREFIX=$PREFIX > cmake.log 2>&1
+if [ $? -ne 0 ]; then
+    echo "CMAKE FAILED:"
+    cat cmake.log
+    exit 1
+fi
 
-cp -a output/* $PREFIX
-mv $PREFIX/lib64 $PREFIX/opt
-mv $PREFIX/opt/grass85 $PREFIX/opt/grass
+make -j$(nproc) > make.log 2>&1
+if [ $? -ne 0 ]; then
+    echo "MAKE FAILED:"
+    tail -50 make.log
+    exit 1
+fi
+
+echo "Installing GRASS to $PREFIX..."
+make install > install.log 2>&1
+if [ $? -ne 0 ]; then
+    echo "MAKE INSTALL FAILED:"
+    cat install.log
+    exit 1
+fi
+if [ -d "$PREFIX/lib64" ]; then
+    mv $PREFIX/lib64 $PREFIX/opt
+fi
+if [ -d "$PREFIX/opt/grass85" ]; then
+    mv $PREFIX/opt/grass85 $PREFIX/opt/grass
+fi
 
 compile_prefix=$(echo $PREFIX |
 	sed -E 's#_h_env_placehold[^/]+#work/build/output#')

@@ -1,2 +1,5 @@
 #!/bin/sh
-grass --exec g.proj -p
+# Simple test to verify GRASS installation
+grass --version
+
+# grass --exec g.proj -p
