@@ -45,6 +45,7 @@ jobs:
       - name: Upload conda packages
         uses: actions/upload-pages-artifact@v3
         with:
+          name: grass-conda-${{ matrix.os }}
           path: grass-conda
 
   deploy:
