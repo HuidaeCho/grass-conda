@@ -13,6 +13,10 @@ curl -L https://micro.mamba.pm/install.sh | env \
 # or if you want to install micromamba in its default paths:
 # curl -L https://micro.mamba.pm/install.sh | sh
 
+# source micromamba
+source ~/.bashrc
+# or ~/.zshrc, ~/.xonshrc, ~/.config/fish/config.fish, ...
+
 # create a new environment
 micromamba create -n grass
 
