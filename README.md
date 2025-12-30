@@ -10,7 +10,7 @@ curl -L https://micro.mamba.pm/install.sh | env \
   PREFIX_LOCATION="$HOME/usr/local/opt/micromamba" \
   sh
 
-# or if you don't care where micromamba is installed
+# or if you want to install micromamba in its default paths:
 # curl -L https://micro.mamba.pm/install.sh | sh
 
 # create a new environment
