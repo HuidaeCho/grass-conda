@@ -51,7 +51,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: grass-conda-${{ matrix.os }}
-          path: built/**
+          path: built
 
   publish:
     name: Publish conda packages
