@@ -8,7 +8,9 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   build:
@@ -48,9 +50,38 @@ jobs:
           micromamba run -n build conda config --add channels conda-forge
           micromamba run -n build conda build grass -c conda-forge --output-folder built
 
-      - name: Publish to GitHub Pages
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload built packages
+        uses: actions/upload-artifact@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: built
+          name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
+          path: built/**
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-name: publish
+          create-args: >-
+            conda-index
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: built
+
+      - shell: bash
+        run: |
+          micromamba run -n publish conda index built
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: built
+
+      - uses: actions/deploy-pages@v4
