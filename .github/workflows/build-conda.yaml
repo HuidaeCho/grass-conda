@@ -14,7 +14,7 @@ permissions:
 
 jobs:
   build:
-    name: Build matrix
+    name: Build conda packages
     strategy:
       fail-fast: false
       matrix:
@@ -47,7 +47,7 @@ jobs:
           micromamba run -n build conda config --add channels conda-forge
           micromamba run -n build conda build grass -c conda-forge --output-folder built
 
-      - name: Upload built packages
+      - name: Upload conda packages
         uses: actions/upload-pages-artifact@v3
         with:
           path: built
@@ -62,6 +62,6 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
-      - name: Deploy built packages
+      - name: Deploy conda packages
         id: deployment
         uses: actions/deploy-pages@v4
