@@ -42,7 +42,7 @@ jobs:
         run: |
           micromamba run -n build conda config --set channel_priority strict
           micromamba run -n build conda config --add channels conda-forge
-          micromamba run -n build conda build recipe -c conda-forge --output-folder built
+          micromamba run -n build conda build grass -c conda-forge --output-folder built
 
       - name: Upload build artifacts (CI only)
         uses: actions/upload-artifact@v4
