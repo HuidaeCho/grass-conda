@@ -1,3 +1,5 @@
+name: Build GRASS conda packages
+
 on:
   push:
     branches: [ main ]
@@ -5,19 +7,25 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build:
+    name: Build matrix
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        python: ["3.10", "3.11", "3.12", "3.13"]
+        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        python: [ "3.10", "3.11", "3.12", "3.13" ]
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - uses: mamba-org/setup-micromamba@v2
+      - name: Set up micromamba
+        uses: mamba-org/setup-micromamba@v2
         with:
           micromamba-version: latest
           environment-name: build
@@ -27,19 +35,22 @@ jobs:
           cache-environment: true
           cache-downloads: true
 
-      - shell: bash
+      - name: Show micromamba environment
+        shell: bash
         run: |
           micromamba info
           micromamba list
 
-      - shell: bash
+      - name: Build conda package
+        shell: bash
         run: |
           micromamba run -n build conda config --set channel_priority strict
           micromamba run -n build conda config --add channels conda-forge
           micromamba run -n build conda build grass -c conda-forge --output-folder built
 
-      - uses: peaceiris/actions-gh-pages@v4
+      - name: Publish to GitHub Pages
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: built
