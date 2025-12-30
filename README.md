@@ -24,7 +24,7 @@ micromamba create -n grass
 micromamba activate grass
 
 # install GRASS
-micromamba install grass -yc https://grass.isnew.info/
+micromamba install grass -yc https://grass-conda.isnew.info/
 
 # run GRASS
 grass
