@@ -50,7 +50,7 @@ jobs:
       - name: Upload built packages
         uses: actions/upload-artifact@v4
         with:
-          name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
+          name: grass-conda-${{ matrix.os }}
           path: built/**
 
   publish:
