@@ -77,7 +77,7 @@ jobs:
           micromamba run -n index conda index _site
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v
+        uses: actions/upload-pages-artifact@v3
 
   deploy:
     name: Deploy conda packages
