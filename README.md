@@ -1,40 +1,27 @@
-# GRASS Conda Packaging
+# GRASS Conda Packages
 
-1. Install Miniconda
+This repository contains conda recipes for [GRASS](https://grass.osgeo.org/)
+and hosts pre-built packages at https://grass.isnew.info/. You can install
+GRASS conda packages using the following commands:
 ```bash
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-chmod a+x Miniconda3-latest-Linux-x86_64.sh
-./Miniconda3-latest-Linux-x86_64.sh -b -u -p ~/opt/miniconda
-~/opt/miniconda/bin/conda init
-. ~/.bashrc
-```
-2. Setup Conda for GRASS build and packaging
-```bash
-conda config --add channels conda-forge
-conda config --set channel_priority strict
-conda create -n grass-conda conda-build git
-conda activate grass-conda
-```
-3. Clone this repository
-```bash
-git clone https://github.com/HuidaeCho/grass-conda-recipes.git
-```
-4. Build and package GRASS
-```bash
-cd grass-conda-recipes
-conda-build grass
-```
-5. Find a new GRASS package
-```bash
-ls -al ~/opt/miniconda/envs/grass-conda/conda-bld/linux-64/grass-*.conda
-```
-6. Create a new test Conda environment and install it
-```bash
-conda create -n grass-conda-test
-conda activate grass-conda-test
-conda install grass -c ~/opt/miniconda/envs/grass-conda/conda-bld
-```
-7. See if GRASS is installed
-```bash
-ls -al ~/opt/miniconda/envs/grass-conda-test/bin/grass
+# install micromamba
+curl -L https://micro.mamba.pm/install.sh | env \
+  BIN_FOLDER="$HOME/usr/local/bin" \
+  PREFIX_LOCATION="$HOME/usr/local/opt/micromamba" \
+  sh
+
+# or if you don't care where micromamba is installed
+# curl -L https://micro.mamba.pm/install.sh | sh
+
+# create a new environment
+micromamba create -n grass
+
+# activate the new environment
+micromamba activate grass
+
+# install GRASS
+micromamba install grass -yc https://grass.isnew.info/
+
+# run GRASS
+grass
 ```
