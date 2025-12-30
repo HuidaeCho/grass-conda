@@ -17,16 +17,16 @@ conda activate grass-conda
 ```
 3. Clone this repository
 ```bash
-git clone https://github.com/HuidaeCho/grass-conda.git
+git clone https://github.com/HuidaeCho/grass-conda-recipes.git
 ```
 4. Build and package GRASS
 ```bash
-cd grass-conda
-conda-build recipe
+cd grass-conda-recipes
+conda-build grass
 ```
 5. Find a new GRASS package
 ```bash
-ls -al ~/opt/miniconda/envs/grass-conda/conda-bld/linux-64/grass-1.0.0-h3fd9d12_0.conda
+ls -al ~/opt/miniconda/envs/grass-conda/conda-bld/linux-64/grass-*.conda
 ```
 6. Create a new test Conda environment and install it
 ```bash
