@@ -71,6 +71,21 @@ jobs:
 
           find _site -maxdepth 2 -type d -print
 
+      - name: Set up micromamba
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          micromamba-version: latest
+          environment-name: index
+          create-args: conda-index
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Show micromamba environment
+        shell: bash
+        run: |
+          micromamba info
+          micromamba list
+
       - name: Index conda channel
         shell: bash
         run: |
