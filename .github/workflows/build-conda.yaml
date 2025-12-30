@@ -90,6 +90,7 @@ jobs:
         shell: bash
         run: |
           micromamba run -n index conda index _site
+          ./make_root.py _site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
