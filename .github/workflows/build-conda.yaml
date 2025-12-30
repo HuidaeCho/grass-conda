@@ -1,0 +1,51 @@
+name: Build conda package
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ "v*" ]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python: ["3.10", "3.11"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up micromamba
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          micromamba-version: latest
+          environment-name: build
+          create-args: >-
+            python=${{ matrix.python }}
+            conda-build
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Show conda info
+        shell: bash
+        run: |
+          micromamba info
+          micromamba list
+
+      - name: Build
+        shell: bash
+        run: |
+          micromamba run -n build conda config --set channel_priority strict
+          micromamba run -n build conda config --add channels conda-forge
+          micromamba run -n build conda build recipe -c conda-forge --output-folder built
+
+      - name: Upload build artifacts (CI only)
+        uses: actions/upload-artifact@v4
+        with:
+          name: conda-packages-${{ matrix.os }}-py${{ matrix.python }}
+          path: built/**
