@@ -62,5 +62,6 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
-      - id: deployment
+      - name: Deploy built packages
+        id: deployment
         uses: actions/deploy-pages@v4
