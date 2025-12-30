@@ -1,7 +1,7 @@
 # GRASS Conda Packages
 
 This repository contains conda recipes for [GRASS](https://grass.osgeo.org/)
-and hosts pre-built packages at https://grass.isnew.info/. You can install
+and hosts pre-built packages at https://grass-conda.isnew.info/. You can install
 GRASS conda packages using the following commands:
 ```bash
 # install micromamba
