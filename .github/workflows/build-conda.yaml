@@ -48,13 +48,12 @@ jobs:
           micromamba run -n build conda build grass -c conda-forge --output-folder built
 
       - name: Upload built packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: grass-conda-${{ matrix.os }}
           path: built
 
-  publish:
-    name: Publish conda packages
+  deploy:
+    name: Deploy conda packages
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -63,15 +62,5 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
-      - uses: actions/download-artifact@v4
-        with:
-          path: built
-
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: built
-
       - id: deployment
         uses: actions/deploy-pages@v4
