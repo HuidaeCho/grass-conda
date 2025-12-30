@@ -63,13 +63,13 @@ jobs:
       - name: Assemble conda channel layout
         shell: bash
         run: |
-          mkdir -p _site
+          mkdir -p grass-conda
           for d in artifacts/grass-conda-*; do
             echo "Merging $d"
-            rsync -a $d/ _site/
+            rsync -a $d/ grass-conda/
           done
 
-          find _site -maxdepth 2 -type d -print
+          find grass-conda -maxdepth 2 -type d -print
 
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@v2
@@ -89,8 +89,8 @@ jobs:
       - name: Index conda channel
         shell: bash
         run: |
-          micromamba run -n index conda index _site
-          ./make_root.py _site
+          micromamba run -n index conda index grass-conda
+          ./make_root.py grass-conda
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
