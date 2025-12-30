@@ -1,4 +1,4 @@
-name: Build GRASS conda packages
+name: Build and publish GRASS conda packages
 
 on:
   push:
@@ -66,8 +66,6 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
-      - uses: actions/checkout@v4
-
       - uses: mamba-org/setup-micromamba@v2
         with:
           environment-name: publish
@@ -79,8 +77,7 @@ jobs:
           path: built
 
       - shell: bash
-        run: |
-          micromamba run -n publish conda index built
+        run: micromamba run -n publish conda index built
 
       - uses: actions/configure-pages@v5
 
@@ -88,4 +85,5 @@ jobs:
         with:
           path: built
 
-      - uses: actions/deploy-pages@v4
+      - id: deployment
+        uses: actions/deploy-pages@v4
