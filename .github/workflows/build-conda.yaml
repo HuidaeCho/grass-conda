@@ -42,15 +42,46 @@ jobs:
           micromamba run -n build conda config --add channels conda-forge
           micromamba run -n build conda build grass -c conda-forge --output-folder grass-conda
 
-      - name: Upload conda packages
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload conda artifact
+        uses: actions/upload-artifact@v4
         with:
           name: grass-conda-${{ matrix.os }}
           path: grass-conda
 
+  package:
+    name: Package conda artifacts
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download conda artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Assemble conda channel layout
+        shell: bash
+        run: |
+          mkdir -p _site
+          for d in artifacts/grass-conda-*; do
+            echo "Merging $d"
+            rsync -a $d/ _site/
+          done
+
+          find _site -maxdepth 2 -type d -print
+
+      - name: Index conda channel
+        shell: bash
+        run: |
+          micromamba run -n index conda index _site
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v
+
   deploy:
     name: Deploy conda packages
-    needs: build
+    needs: package
     permissions:
       pages: write
       id-token: write
