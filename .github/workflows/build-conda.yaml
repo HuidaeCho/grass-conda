@@ -91,7 +91,7 @@ jobs:
             echo "Merging $d"
             rsync -a $d/ grass-conda/
           done
-          find grass-conda -print
+          find grass-conda -print | sort
 
       - name: Index conda channel
         shell: bash
