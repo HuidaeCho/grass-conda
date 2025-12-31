@@ -40,10 +40,9 @@ jobs:
       - name: Build conda package
         shell: bash
         run: |
-          micromamba run -n build conda build grass \
-            -c conda-forge \
-            --override-channels \
-            --channel-priority strict \
+          micromamba run -n build conda config --set channel_priority strict
+          micromamba run -n build conda config --add channels conda-forge
+          micromamba run -n build conda build grass -c conda-forge \
             --output-folder grass-conda \
             --variants "{python: ['${{ matrix.python }}']}"
 
