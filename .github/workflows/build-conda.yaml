@@ -93,17 +93,17 @@ jobs:
           done
           find grass-conda -print | sort
 
-      - name: Upload channel artifact
-        uses: actions/upload-artifact@v4
-        with:
-          nmae: channel
-          path: grass-conda
-
       - name: Index conda channel
         shell: bash
         run: |
           micromamba run -n index conda index grass-conda
           python .github/workflows/scripts/make_root.py grass-conda
+
+      - name: Upload channel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          nmae: channel
+          path: grass-conda
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
