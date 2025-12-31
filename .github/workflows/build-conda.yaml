@@ -90,7 +90,7 @@ jobs:
         shell: bash
         run: |
           micromamba run -n index conda index grass-conda
-          ./make_root.py grass-conda
+          python .github/workflows/scripts/make_root.py grass-conda
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
