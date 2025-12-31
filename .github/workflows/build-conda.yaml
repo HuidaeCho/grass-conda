@@ -55,21 +55,8 @@ jobs:
     if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
-      - name: Download conda artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Assemble conda channel layout
-        shell: bash
-        run: |
-          mkdir -p grass-conda
-          for d in artifacts/grass-conda-*; do
-            echo "Merging $d"
-            rsync -a $d/ grass-conda/
-          done
-
-          find grass-conda -maxdepth 2 -type d -print
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@v2
@@ -85,6 +72,22 @@ jobs:
         run: |
           micromamba info
           micromamba list
+
+      - name: Download conda artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Assemble conda channel layout
+        shell: bash
+        run: |
+          mkdir -p grass-conda
+          for d in artifacts/grass-conda-*; do
+            echo "Merging $d"
+            rsync -a $d/ grass-conda/
+          done
+
+          find grass-conda -maxdepth 2 -type d -print
 
       - name: Index conda channel
         shell: bash
