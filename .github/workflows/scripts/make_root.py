@@ -27,14 +27,24 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>grass-conda channel</title>
+  <title>grass-conda</title>
 </head>
 <body>
-  <h1>grass-conda channel</h1>
-  <p>Available subdirs (from <code>repodata.json</code>) as of {now}:</p>
+  <h1>grass-conda</h1>
+  <p>Welcome to the grass-conda channel! This channel provides conda packages
+  for <a href="https://grass.osgeo.org/">GRASS</a>, built from source as of
+  {now}.</p>
   <ul>
 {items}
   </ul>
+  <p>See the <a href="https://github.com/HuidaeCho/grass-conda">GitHub
+  repository</a> for recipes, CI workflows, and build details.</p>
+
+  <h2>Install</h2>
+  <p>Install packages from this channel using conda or mamba:</p>
+  <pre><code>
+conda install -c https://grass-conda.isnew.info/ grass
+  </code></pre>
 </body>
 </html>
 """
