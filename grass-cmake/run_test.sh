@@ -1,2 +1,2 @@
 #!/bin/sh
-grass --exec g.proj -p
+grass --version

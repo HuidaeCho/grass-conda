@@ -27,15 +27,10 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Conda channel</title>
-  <style>
-    body {{ font-family: system-ui, sans-serif; margin: 2rem; }}
-    code {{ background: #f4f4f4; padding: 0.1rem 0.3rem; border-radius: 4px; }}
-  </style>
+  <title>grass-conda channel</title>
 </head>
 <body>
-  <h1>Conda channel</h1>
+  <h1>grass-conda channel</h1>
   <p>Available subdirs (from <code>repodata.json</code>) as of {now}:</p>
   <ul>
 {items}

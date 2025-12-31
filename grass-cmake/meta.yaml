@@ -1,4 +1,4 @@
-{% set version = "1.0.0" %}
+{% set version = "dev" %}
 
 package:
   name: grass
@@ -6,57 +6,67 @@ package:
 
 source:
   git_url: https://github.com/OSGeo/grass.git
-#  path: /home/hcho/usr/grass/grass
 
 build:
   number: 0
+  skip: true  # [win]
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - {{ stdlib("c") }}
+    - bison
     - cmake
-    - make # [unix]
+    - flex
+    - gettext-tools
+    - make           # [unix]
     - pkg-config
-    #- msbuild # [win]
   host:
-    - flex
-    - bison
-    - proj
-    - gdal
-    - xorg-libx11
-    - xorg-xproto
-    - libopengl
-    - libgl-devel
+    - bzip2
     - cairo
-    - postgresql
-    - gettext
+    - expat
     - fftw
+    - fontconfig
+    - freetype
+    - gettext       # [osx]
+    - libgdal-core
+    - libgl-devel   # [linux]
+    - libglu        # [linux]
+    - libiconv
+    - libpdal-core
+    - libpng
+    - libpq
+    - libsqlite
+    - libtiff
     - openblas
-    - pdal
-    - libglu
+    - proj
+    - python
+    - readline
     - wxpython
+    - xorg-libx11   # [linux]
+    - zlib
+    - zstd
   run:
-    - flex
-    - bison
-    - proj
-    - gdal
-    - xorg-libx11
-    - xorg-xproto
-    - libopengl
-    - libgl-devel
-    - cairo
-    - postgresql
-    - gettext
-    - fftw
-    - openblas
-    - pdal
-    - libglu
+    - _openmp_mutex  # [linux]
+    - llvm-openmp    # [osx]
+    - python
     - wxpython
 
 about:
   home: https://grass.osgeo.org/
-  license: GPL 2+
-  summary: GRASS (https://grass.osgeo.org/) is a Geographic Information System used for geospatial data management and analysis, image processing, graphics/map production, spatial modeling, and visualization.
+  summary: GRASS computational engine for raster, vector, and geospatial processing
+  description: |
+    GRASS is a geospatial engine that enables spatial data analysis,
+    visualization, and modeling. It provides researchers and practitioners with
+    science-backed tools to understand and manage landscapes, natural
+    resources, and human environments.
+  license: GPL-2.0-or-later
+  license_family: GPL2
+  license_file: COPYING
+  doc_url: https://grass.osgeo.org/grass-stable/manuals/
   dev_url: https://github.com/OSGeo/grass
-  doc_url: https://grass.osgeo.org/grass-stable/manuals/index.html
+
+extra:
+  recipe-maintainers:
+    - HuidaeCho
