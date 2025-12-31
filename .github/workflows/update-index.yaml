@@ -1,0 +1,49 @@
+name: Update GRASS conda channel index
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - github/workflows/scripts/make_root.py
+  workflow_dispatch:
+
+jobs:
+  update:
+    name: Update index.html
+    permissions:
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download latest channel artifacts from build workflow
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          run_id="$(gh run list \
+                  --workflow build-conda.yaml \
+                  --branch main \
+                  --status success \
+                  --limit 1 \
+                  --json databaseId \
+                  --jq '.[0].databaseId')"
+          echo "Latest successful run id: $run_id"
+          mkdir -p grass-conda
+          gh run download "$run_id" -n channel -D grass-conda
+
+      - name: Regenerate index.html
+        shell: bash
+        run: |
+          python .github/workflows/scripts/make_root.py grass-conda
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: grass-conda
+
+      - name: Deploy new index.html
+        uses: actions/deploy-pages@v4

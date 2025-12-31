@@ -93,6 +93,12 @@ jobs:
           done
           find grass-conda -print | sort
 
+      - name: Upload channel artifact
+        uses: actions/upload-artifact@v4
+        with:
+          nmae: channel
+          path: grass-conda
+
       - name: Index conda channel
         shell: bash
         run: |
