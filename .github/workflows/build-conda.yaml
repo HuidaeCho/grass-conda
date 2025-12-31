@@ -46,7 +46,7 @@ jobs:
       - name: Upload conda artifact
         uses: actions/upload-artifact@v4
         with:
-          name: grass-conda-${{ matrix.os }}
+          name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
           path: grass-conda
 
   package:
