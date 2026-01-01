@@ -4,7 +4,11 @@ on:
   push:
     branches: [ main ]
     tags: [ "v*" ]
+    paths-ignore:
+      - .github/workflows/scripts/make_root.py
   pull_request:
+    paths-ignore:
+      - .github/workflows/scripts/make_root.py
   workflow_dispatch:
 
 jobs:
