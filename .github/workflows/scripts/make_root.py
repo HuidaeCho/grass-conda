@@ -42,9 +42,9 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 
   <h2>Install</h2>
   <p>Install packages from this channel using conda or mamba:</p>
-  <pre><code>
+  <pre>
 conda install -c https://grass-conda.isnew.info/ grass
-  </code></pre>
+  </pre>
 </body>
 </html>
 """
