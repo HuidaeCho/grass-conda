@@ -28,7 +28,7 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>pre{{font-size:120%;}}</style>
+  <style>pre{{font-size:150%;}}</style>
   <title>grass-conda</title>
 </head>
 <body>
