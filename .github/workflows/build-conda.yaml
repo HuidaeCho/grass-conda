@@ -102,7 +102,7 @@ jobs:
       - name: Upload channel artifact
         uses: actions/upload-artifact@v4
         with:
-          nmae: channel
+          name: channel
           path: grass-conda
 
       - name: Upload Pages artifact
