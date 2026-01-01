@@ -42,26 +42,21 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   repository</a> for recipes, CI workflows, and build details.</p>
 
   <h2>Install</h2>
-  <p>Install micromamba:</p>
+  You can install the GRASS conda package using the following commands:
   <pre><code>
 # install micromamba
-curl -L https://micro.mamba.pm/install.sh | env \
-  BIN_FOLDER="$HOME/usr/local/bin" \
-  PREFIX_LOCATION="$HOME/usr/local/opt/micromamba" \
+curl -L https://micro.mamba.pm/install.sh | env \\
+  BIN_FOLDER="$HOME/usr/local/bin" \\
+  PREFIX_LOCATION="$HOME/usr/local/opt/micromamba" \\
   sh
 
 # source micromamba
 source ~/.bashrc
-  </code></pre>
 
-  <p>Install packages from this channel using micromamba (c-compiler for
-  g.extension):</p>
-  <pre><code>
+# install GRASS (c-compiler for g.extension)
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
-  </code></pre>
 
-  <p>Run GRASS:</p>
-  <pre><code>
+# run GRASS
 micromamba run -n grass grass
   </code></pre>
 </body>
