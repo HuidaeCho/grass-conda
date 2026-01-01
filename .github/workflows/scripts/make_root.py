@@ -42,9 +42,27 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   repository</a> for recipes, CI workflows, and build details.</p>
 
   <h2>Install</h2>
-  <p>Install packages from this channel using conda or mamba:</p>
+  <p>Install micromamba:</p>
   <pre><code>
-conda install -c https://grass-conda.isnew.info/ grass
+# install micromamba
+curl -L https://micro.mamba.pm/install.sh | env \
+  BIN_FOLDER="$HOME/usr/local/bin" \
+  PREFIX_LOCATION="$HOME/usr/local/opt/micromamba" \
+  sh
+
+# source micromamba
+source ~/.bashrc
+  </code></pre>
+
+  <p>Install packages from this channel using micromamba (c-compiler for
+  g.extension):</p>
+  <pre><code>
+micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
+  </code></pre>
+
+  <p>Run GRASS:</p>
+  <pre><code>
+micromamba run -n grass grass
   </code></pre>
 </body>
 </html>
