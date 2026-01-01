@@ -27,6 +27,7 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>grass-conda</title>
 </head>
 <body>
@@ -42,9 +43,9 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 
   <h2>Install</h2>
   <p>Install packages from this channel using conda or mamba:</p>
-  <pre>
+  <pre><code>
 conda install -c https://grass-conda.isnew.info/ grass
-  </pre>
+  </code></pre>
 </body>
 </html>
 """
