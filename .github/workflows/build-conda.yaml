@@ -6,9 +6,11 @@ on:
     tags: [ "v*" ]
     paths-ignore:
       - .github/workflows/scripts/make_root.py
+      - .github/workflows/update-index.yaml
   pull_request:
     paths-ignore:
       - .github/workflows/scripts/make_root.py
+      - .github/workflows/update-index.yaml
   workflow_dispatch:
 
 jobs:
