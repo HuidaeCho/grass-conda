@@ -84,7 +84,7 @@ jobs:
     name: Package conda artifacts
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name != "pull_request" && github.ref == "refs/heads/main"
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout repository
@@ -148,7 +148,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    if: github.event_name != "pull_request" && github.ref == "refs/heads/main"
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Deploy conda packages
