@@ -79,7 +79,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
-          path: grass-conda
+          path: grass-dev-conda
 
   package:
     name: Package conda artifacts
