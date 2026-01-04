@@ -54,7 +54,7 @@ jobs:
           micromamba run -n build conda config --add channels conda-forge
 
       - name: Build grass package
-        if: ${{ matrix.os != "windows-latest" }}
+        if: ${{ matrix.os != 'windows-latest' }}
         shell: bash
         run: |
           micromamba run -n build conda build grass -c conda-forge \
