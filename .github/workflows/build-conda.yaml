@@ -64,7 +64,7 @@ jobs:
       - name: Build grass-dev package
         shell: bash
         run: |
-          micromamba run -n build conda build grass -c conda-forge \
+          micromamba run -n build conda build grass-dev -c conda-forge \
             --output-folder grass-dev-conda \
             --variants "{python: ['${{ matrix.python }}']}"
 
