@@ -8,8 +8,6 @@ set -e
 [ "$target_platform" = "osx-64" ] &&
 	CXXFLAGS="${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY"
 
-cmake -B build \
-	-DCMAKE_CXX_FLAGS="$CXXFLAGS" \
-	--install-prefix $PREFIX
+cmake -B build -DCMAKE_CXX_FLAGS="$CXXFLAGS" --install-prefix $PREFIX
 cmake --build build -j$CPU_COUNT
 cmake --install build
