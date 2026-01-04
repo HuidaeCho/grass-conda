@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, macos-latest, macos-15-intel ]
+        os: [ ubuntu-latest, macos-latest, macos-15-intel, windows-latest ]
         python: [ "3.10", "3.11", "3.12", "3.13" ]
     runs-on: ${{ matrix.os }}
 
@@ -47,26 +47,44 @@ jobs:
           micromamba info
           micromamba list
 
-      - name: Build conda package
+      - name: Configure micromamba
         shell: bash
         run: |
           micromamba run -n build conda config --set channel_priority strict
           micromamba run -n build conda config --add channels conda-forge
+
+      - name: Build grass package
+        if: ${{ matrix.os != "windows-latest" }}
+        shell: bash
+        run: |
           micromamba run -n build conda build grass -c conda-forge \
             --output-folder grass-conda \
             --variants "{python: ['${{ matrix.python }}']}"
 
-      - name: Upload conda artifact
+      - name: Build grass-dev package
+        shell: bash
+        run: |
+          micromamba run -n build conda build grass -c conda-forge \
+            --output-folder grass-dev-conda \
+            --variants "{python: ['${{ matrix.python }}']}"
+
+      - name: Upload grass artifact
         uses: actions/upload-artifact@v4
         with:
           name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
+          path: grass-conda
+
+      - name: Upload grass-dev artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
           path: grass-conda
 
   package:
     name: Package conda artifacts
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != "pull_request" && github.ref == "refs/heads/main"
 
     steps:
       - name: Checkout repository
@@ -97,7 +115,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p grass-conda
-          for d in artifacts/grass-conda-*; do
+          for d in artifacts/grass-*conda-*; do
             echo "Merging $d"
             rsync -a $d/ grass-conda/
           done
@@ -130,7 +148,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: github.event_name != "pull_request" && github.ref == "refs/heads/main"
 
     steps:
       - name: Deploy conda packages

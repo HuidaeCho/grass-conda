@@ -9,17 +9,18 @@ source:
 
 build:
   number: 0
-  skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler("c") }}
     - {{ compiler("cxx") }}
-    - {{ stdlib("c") }}
-    - bison
+    - {{ stdlib("c") }}      # [unix]
+    - bison          # [unix]
     - cmake
-    - flex
+    - flex           # [unix]
     - gettext-tools
+    - m2-bison       # [win]
+    - m2-flex        # [win]
     - make           # [unix]
     - pkg-config
   host:
@@ -40,9 +41,10 @@ requirements:
     - libsqlite
     - libtiff
     - openblas
+    - pcre          # [win]
     - proj
     - python
-    - readline
+    - readline      # [unix]
     - wxpython
     - xorg-libx11   # [linux]
     - zlib
