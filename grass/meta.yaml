@@ -23,17 +23,19 @@ requirements:
     - gettext-tools
     - make           # [unix]
     - pkg-config
+    - sed            # [unix]
   host:
     - bzip2
     - cairo
-    - gettext       # [osx]
     - expat
     - fftw
     - fontconfig
     - freetype
+    - gettext       # [osx]
     - libgdal-core
     - libgl-devel   # [linux]
     - libglu        # [linux]
+    - libgomp       # [linux]
     - libiconv
     - libopenblas
     - libpdal-core
@@ -41,6 +43,7 @@ requirements:
     - libpq
     - libsqlite
     - libtiff
+    - llvm-openmp   # [osx]
     - proj
     - python
     - readline
@@ -49,10 +52,14 @@ requirements:
     - zlib
     - zstd
   run:
-    - _openmp_mutex  # [linux]
-    - llvm-openmp    # [osx]
+    - libgomp      # [linux]
+    - llvm-openmp  # [osx]
     - python
     - wxpython
+
+test:
+  commands:
+    - grass --version
 
 about:
   home: https://grass.osgeo.org/
@@ -63,7 +70,6 @@ about:
     science-backed tools to understand and manage landscapes, natural
     resources, and human environments.
   license: GPL-2.0-or-later
-  license_family: GPL2
   license_file: COPYING
   doc_url: https://grass.osgeo.org/grass-stable/manuals/
   dev_url: https://github.com/OSGeo/grass
@@ -71,3 +77,4 @@ about:
 extra:
   recipe-maintainers:
     - HuidaeCho
+    - wenzeslaus
