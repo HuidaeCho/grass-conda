@@ -19,14 +19,14 @@ requirements:
     - {{ stdlib("c") }}      # [unix]
     - bison          # [unix]
     - flex           # [unix]
+    - gcc            # [win]
     - gettext-tools
     - m2-bash        # [win]
     - m2-bison       # [win]
     - m2-coreutils   # [win]
     - m2-flex        # [win]
-    - m2-sed         # [win]
     - m2-grep        # [win]
-    - gcc            # [win]
+    - m2-sed         # [win]
     - make           # [unix]
     - pkg-config
     - sed            # [unix]
