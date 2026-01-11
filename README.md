@@ -24,7 +24,7 @@ On Windows CMD.exe (still NOT working),
 rem install micromamba
 mkdir %USERPROFILE%\usr\local\bin
 curl -L https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-win-64.exe ^
-  -o c:\users\hcho\usr\local\bin\micromamba.exe
+  -o %USERPROFILE%\usr\local\bin\micromamba.exe
 
 rem if %USERPROFILE%\usr\local\bin is not in PATH
 set PATH=%USERPROFILE%\usr\local\bin;%PATH%
