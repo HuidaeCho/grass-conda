@@ -18,6 +18,7 @@ requirements:
     - bison          # [unix]
     - cmake
     - flex           # [unix]
+    - gettext-tools
     - m2-bison       # [win]
     - m2-flex        # [win]
     - make           # [unix]
@@ -28,6 +29,7 @@ requirements:
     - fftw
     - fontconfig
     - freetype
+    - gettext       # [osx]
     - libgdal-core
     - libgl-devel   # [linux]
     - libglu        # [linux]
