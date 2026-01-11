@@ -37,13 +37,13 @@ requirements:
     - libglu        # [linux]
     - libgomp       # [linux]
     - libiconv
-    - libopenblas
     - libpdal-core
     - libpng
     - libpq
     - libsqlite
     - libtiff
     - llvm-openmp   # [osx]
+    - openblas
     - pcre          # [win]
     - proj
     - python
