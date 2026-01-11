@@ -34,9 +34,9 @@ set MAMBA_ROOT_PREFIX=%USERPROFILE%\usr\local\opt\micromamba
 setx MAMBA_ROOT_PREFIX %MAMBA_ROOT_PREFIX%
 
 rem initialize micromamba
-micromamba.exe shell init --shell cmd.exe
+micromamba shell init --shell cmd.exe
 
-rem install GRASS (c-compiler for g.extension)
+rem install GRASS (c-compiler for g.extension); type micromamba, NOT micromamba.exe
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
 
 rem run GRASS
