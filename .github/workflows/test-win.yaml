@@ -1,4 +1,4 @@
-name: Build and deploy GRASS conda packages
+name: Test GRASS Windows conda packages
 
 on:
   push:
