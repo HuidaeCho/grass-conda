@@ -1,0 +1,61 @@
+name: Build and deploy GRASS conda packages
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ "v*" ]
+    paths-ignore:
+      - .github/workflows/scripts/make_root.py
+      - .github/workflows/update-index.yaml
+      - README.md
+      - grass-cmake/**
+  pull_request:
+    paths-ignore:
+      - .github/workflows/scripts/make_root.py
+      - .github/workflows/update-index.yaml
+      - README.md
+      - grass-cmake/**
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build conda packages
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest ]
+        python: [ '3.10', '3.11', '3.12', '3.13' ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up micromamba
+        uses: mamba-org/setup-micromamba@v2
+        with:
+          micromamba-version: latest
+          environment-name: build
+          create-args: >-
+            conda-build
+          cache-environment: true
+          cache-downloads: true
+
+      - name: Show micromamba environment
+        shell: bash
+        run: |
+          micromamba info
+          micromamba list
+
+      - name: Configure micromamba
+        shell: bash
+        run: |
+          micromamba run -n build conda config --set channel_priority strict
+          micromamba run -n build conda config --add channels conda-forge
+
+      - name: Build grass-win package
+        shell: bash
+        run: |
+          micromamba run -n build conda build grass-win -c conda-forge \
+            --output-folder grass-win \
+            --variants "{python: ['${{ matrix.python }}']}"
