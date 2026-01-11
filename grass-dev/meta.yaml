@@ -23,11 +23,9 @@ requirements:
     - m2-flex        # [win]
     - make           # [unix]
     - pkg-config
-    - sed            # [unix]
   host:
     - bzip2
     - cairo
-    - expat
     - fftw
     - fontconfig
     - freetype
