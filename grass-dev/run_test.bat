@@ -1,2 +1,0 @@
-@echo on
-grass --version
