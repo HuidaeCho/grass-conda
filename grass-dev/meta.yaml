@@ -14,10 +14,13 @@ requirements:
   build:
     - {{ compiler("c") }}
     - {{ compiler("cxx") }}
-    - {{ stdlib("c") }}
-    - bison
-    - flex
+    - {{ stdlib("c") }}      # [unix]
+    - bison          # [unix]
+    - cmake
+    - flex           # [unix]
     - gettext-tools
+    - m2-bison       # [win]
+    - m2-flex        # [win]
     - make           # [unix]
     - pkg-config
     - sed            # [unix]
@@ -41,9 +44,10 @@ requirements:
     - libsqlite
     - libtiff
     - llvm-openmp   # [osx]
+    - pcre          # [win]
     - proj
     - python
-    - readline
+    - readline      # [unix]
     - wxpython
     - xorg-libx11   # [linux]
     - zlib
