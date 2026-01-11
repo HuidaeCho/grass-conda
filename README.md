@@ -19,3 +19,27 @@ micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
 # run GRASS
 micromamba run -n grass grass
 ```
+On Windows CMD.exe (still NOT working),
+```cmd
+rem install micromamba
+mkdir %USERPROFILE%\usr\local\bin
+curl -L https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-win-64.exe ^
+  -o c:\users\hcho\usr\local\bin\micromamba.exe
+
+rem if %USERPROFILE%\usr\local\bin is not in PATH
+set PATH=%USERPROFILE%\usr\local\bin;%PATH%
+setx PATH %PATH%
+
+rem set the root prefix of micromamba
+set MAMBA_ROOT_PREFIX=%USERPROFILE%\usr\local\opt\micromamba
+setx MAMBA_ROOT_PREFIX %MAMBA_ROOT_PREFIX%
+
+rem initialize micromamba
+micromamba.exe shell init --shell cmd.exe
+
+rem install GRASS (c-compiler for g.extension)
+micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
+
+rem run GRASS
+micromamba run -n grass grass
+```
