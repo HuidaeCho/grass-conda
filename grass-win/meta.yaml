@@ -20,8 +20,13 @@ requirements:
     - bison          # [unix]
     - flex           # [unix]
     - gettext-tools
+    - m2-bash        # [win]
     - m2-bison       # [win]
+    - m2-coreutils   # [win]
     - m2-flex        # [win]
+    - m2-sed         # [win]
+    - m2-grep        # [win]
+    - gcc            # [win]
     - make           # [unix]
     - pkg-config
     - sed            # [unix]
@@ -38,13 +43,13 @@ requirements:
     - libglu        # [linux]
     - libgomp       # [linux]
     - libiconv
+    - libopenblas
     - libpdal-core
     - libpng
     - libpq
     - libsqlite
     - libtiff
     - llvm-openmp   # [osx]
-    - openblas
     - pcre          # [win]
     - proj
     - python
