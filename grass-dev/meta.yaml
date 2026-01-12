@@ -45,6 +45,7 @@ requirements:
     - pcre          # [win]
     - proj
     - python
+    - pywin32       # [win]
     - readline      # [unix]
     - wxpython
     - xorg-libx11   # [linux]
