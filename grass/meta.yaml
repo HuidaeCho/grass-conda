@@ -10,9 +10,10 @@ source:
   sha256: {{ sha256 }}
   patches:
     - patches/0001-autoconf-cross-compile-file-checks.patch
+    - patches/0002-g-mkfontcap-cross-compile-skip.patch
 
 build:
-  number: 0
+  number: 3
   skip: true  # [win]
 
 requirements:
@@ -23,9 +24,14 @@ requirements:
     - bison
     - flex
     - gettext-tools
+    - libgdal-core   # [build_platform != target_platform]
+    - libpng         # [build_platform != target_platform]
     - make           # [unix]
     - pkg-config
+    - proj           # [build_platform != target_platform]
+    - python         # [osx]
     - sed            # [unix]
+    - zlib           # [build_platform != target_platform]
   host:
     - bzip2
     - cairo
@@ -61,7 +67,7 @@ requirements:
 
 test:
   commands:
-    - grass --version
+    - grass --version  # [build_platform == target_platform]
 
 about:
   home: https://grass.osgeo.org/
