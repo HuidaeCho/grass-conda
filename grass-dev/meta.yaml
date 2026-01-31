@@ -7,8 +7,7 @@ package:
 source:
   git_url: https://github.com/OSGeo/grass.git
   patches:
-    - patches/0001-cmake-relpaths.patch
-    - patches/0002-cmake-grass-env-command.patch
+    - patches/0001-cmake-grass-env-command.patch
 
 build:
   number: 0
