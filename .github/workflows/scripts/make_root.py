@@ -46,8 +46,8 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   <pre><code>
 # install micromamba
 curl -L https://micro.mamba.pm/install.sh | env \\
-  BIN_FOLDER="$HOME/usr/local/bin" \\
-  PREFIX_LOCATION="$HOME/usr/local/opt/micromamba" \\
+  BIN_FOLDER="$HOME/local/bin" \\
+  PREFIX_LOCATION="$HOME/opt/micromamba" \\
   sh
 
 # source micromamba
