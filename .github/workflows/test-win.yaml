@@ -3,7 +3,7 @@ name: Test GRASS Windows conda packages
 on:
   push:
     branches: [ main ]
-    tags: [ "v*" ]
+    tags: [ 'v*' ]
     paths:
       - grass-win/**
   pull_request:

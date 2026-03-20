@@ -3,7 +3,7 @@ name: Build and deploy GRASS conda packages
 on:
   push:
     branches: [ main ]
-    tags: [ "v*" ]
+    tags: [ 'v*' ]
     paths:
       - grass/**
       - grass-dev/**
@@ -69,14 +69,14 @@ jobs:
             --variants "{python: ['${{ matrix.python }}']}"
 
       - name: Upload grass artifact
-        if: ${{ matrix.os != 'windows-latest' && steps.build_grass.outcome == 'success' }}
+        if: ${{ always() && matrix.os != 'windows-latest' && steps.build_grass.outcome == 'success' }}
         uses: actions/upload-artifact@v6
         with:
           name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
           path: grass-conda
 
       - name: Upload grass-dev artifact
-        if: ${{ steps.build_grass_dev.outcome == 'success' }}
+        if: ${{ always() && steps.build_grass_dev.outcome == 'success' }}
         uses: actions/upload-artifact@v6
         with:
           name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
