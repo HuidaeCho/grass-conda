@@ -76,7 +76,7 @@ jobs:
           path: grass-conda
 
       - name: Upload grass-dev artifact
-        if: ${{ steps.build_grass.outcome == 'success' }}
+        if: ${{ steps.build_grass_dev.outcome == 'success' }}
         uses: actions/upload-artifact@v6
         with:
           name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
