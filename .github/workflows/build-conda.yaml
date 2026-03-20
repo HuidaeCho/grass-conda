@@ -50,6 +50,7 @@ jobs:
           micromamba run -n build conda config --add channels conda-forge
 
       - name: Build grass package
+        id: build_grass
         if: ${{ matrix.os != 'windows-latest' }}
         shell: bash
         run: |
@@ -58,6 +59,7 @@ jobs:
             --variants "{python: ['${{ matrix.python }}']}"
 
       - name: Build grass-dev package
+        id: build_grass_dev
         shell: bash
         run: |
           micromamba run -n build conda build grass-dev -c conda-forge \
@@ -65,13 +67,14 @@ jobs:
             --variants "{python: ['${{ matrix.python }}']}"
 
       - name: Upload grass artifact
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os != 'windows-latest' && steps.build_grass.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
           path: grass-conda
 
       - name: Upload grass-dev artifact
+        if: ${{ steps.build_grass.outcome == 'success' }}
         uses: actions/upload-artifact@v4
         with:
           name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
@@ -81,7 +84,7 @@ jobs:
     name: Package conda artifacts
     needs: build
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: ${{ always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Checkout repository
@@ -145,7 +148,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Deploy conda packages
