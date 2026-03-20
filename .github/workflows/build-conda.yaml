@@ -12,6 +12,8 @@ on:
       - grass/**
       - grass-dev/**
   workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # daily at 00:00 UTC
 
 jobs:
   build:
@@ -25,7 +27,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@v2
@@ -68,14 +70,14 @@ jobs:
 
       - name: Upload grass artifact
         if: ${{ matrix.os != 'windows-latest' && steps.build_grass.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
           path: grass-conda
 
       - name: Upload grass-dev artifact
         if: ${{ steps.build_grass.outcome == 'success' }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
           path: grass-dev-conda
@@ -88,7 +90,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@v2
@@ -107,7 +109,7 @@ jobs:
           micromamba list
 
       - name: Download conda artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           path: artifacts
 
@@ -128,13 +130,13 @@ jobs:
           python .github/workflows/scripts/make_root.py grass-conda
 
       - name: Upload channel artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: channel
           path: grass-conda
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: grass-conda
 
@@ -148,7 +150,7 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
+    if: ${{ always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Deploy conda packages

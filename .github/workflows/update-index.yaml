@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Download latest channel artifacts from build workflow
         shell: bash
@@ -40,7 +40,7 @@ jobs:
           python .github/workflows/scripts/make_root.py grass-conda
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: grass-conda
 
