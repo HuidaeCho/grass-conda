@@ -1,0 +1,40 @@
+From 1b18546270a79fb416e0074cf29017591c1df363 Mon Sep 17 00:00:00 2001
+From: Huidae Cho <grass4u@gmail.com>
+Date: Sun, 26 Apr 2026 18:46:30 -0600
+Subject: [PATCH] build: Fix findstr syntax for Windows build
+
+---
+ cmake/modules/build_addon.cmake   | 4 ++--
+ cmake/modules/generate_docs.cmake | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/cmake/modules/build_addon.cmake b/cmake/modules/build_addon.cmake
+index f72f5756a7c..71f7315be5e 100644
+--- a/cmake/modules/build_addon.cmake
++++ b/cmake/modules/build_addon.cmake
+@@ -46,8 +46,8 @@ set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
+ 
+ if(WIN32)
+   set(null_device nul)
+-  set(search_command findstr /v)
+-  set(html_search_str "\"</body>\|</html>\|</div> <!-- end container -->\"")
++  set(search_command findstr /r /v)
++  set(html_search_str "\"</body> </html> </div>.<!--.end.container.-->\"")
+   set(sep "\;")
+   string(REPLACE ";" "${sep}" env_path "${env_path}")
+ else()
+diff --git a/cmake/modules/generate_docs.cmake b/cmake/modules/generate_docs.cmake
+index 0834aa5f8be..5bae624b720 100644
+--- a/cmake/modules/generate_docs.cmake
++++ b/cmake/modules/generate_docs.cmake
+@@ -99,8 +99,8 @@ function(generate_docs name)
+     set(ext ".exe")
+     set(py ".py")
+     set(null_device nul)
+-    set(search_cmd findstr /v)
+-    set(html_search_str "\"</body>\|</html>\|</div> <!-- end container -->\"")
++    set(search_cmd findstr /r /v)
++    set(html_search_str "\"</body> </html> </div>.<!--.end.container.-->\"")
+   else()
+     set(ext "")
+     set(py "")
