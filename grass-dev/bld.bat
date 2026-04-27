@@ -1,5 +1,5 @@
 @echo on
-cmake -B build %CMAKE_ARGS% -DWITH_OPENGL=OFF
+cmake -B build %CMAKE_ARGS% -DPython3_EXECUTABLE="%PYTHON%" -DWITH_OPENGL=OFF
 if errorlevel 1 exit /b 1
 
 set CMAKE_BUILD_PARALLEL_LEVEL=1
