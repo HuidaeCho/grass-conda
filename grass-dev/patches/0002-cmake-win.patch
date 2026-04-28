@@ -5,7 +5,7 @@
  # configure and install grass.py
  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_RUNTIME_PATH})
 -configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
-+f(WIN32)
++if(WIN32)
 +  configure_file(grass.py ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP} @ONLY)
 +else()
 +  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
