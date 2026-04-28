@@ -41,7 +41,7 @@
    set(TRANSLATE_C_FILE
        ${CMAKE_SOURCE_DIR}/locale/scriptstrings/${G_NAME}_to_translate.c)
  
-+  message("===== locale 6: ${G_DEST_DIR} =====")
++  message("===== locale 6: ${CMAKE_SOURCE_DIR}...${TRANSLATE_C_FILE} =====")
    add_custom_command(
      OUTPUT ${TRANSLATE_C_FILE}
      COMMAND
