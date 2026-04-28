@@ -8,6 +8,7 @@ source:
   git_url: https://github.com/OSGeo/grass.git
   patches:
     - patches/test.patch
+    - patches/test2.patch
 
 build:
   number: 0
