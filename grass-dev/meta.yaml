@@ -9,6 +9,7 @@ source:
   patches:
     - patches/test.patch
     - patches/test2.patch
+    - patches/test3.patch
 
 build:
   number: 0
