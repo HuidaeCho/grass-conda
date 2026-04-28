@@ -1,5 +1,5 @@
 --- lib/init/CMakeLists.txt.orig	2026-02-28 12:44:59.279405329 -0700
-+++ lib/init/CMakeLists.txt	2026-04-28 13:56:33.393550870 -0600
++++ lib/init/CMakeLists.txt	2026-04-28 14:11:44.246152301 -0600
 @@ -50,17 +50,39 @@
  
  # configure and install grass.py
@@ -19,9 +19,9 @@
  
 -install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
 -        DESTINATION ${CMAKE_INSTALL_BINDIR})
-+  message("win-startup 3: ${CMAKE_INSTALL_ETCDIR}")
++  message("win-startup 3: ${GRASS_INSTALL_ETCDIR}")
 +  install(PROGRAMS ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP}
-+	  DESTINATION ${CMAKE_INSTALL_ETCDIR})
++	  DESTINATION ${GRASS_INSTALL_ETCDIR})
 +else()
 +  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
 +
