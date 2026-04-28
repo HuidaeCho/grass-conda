@@ -1,5 +1,14 @@
 --- lib/init/CMakeLists.txt.orig	2026-02-28 12:44:59.279405329 -0700
-+++ lib/init/CMakeLists.txt	2026-04-28 16:46:59.825812769 -0600
++++ lib/init/CMakeLists.txt	2026-04-28 17:54:38.673468674 -0600
+@@ -27,7 +27,7 @@
+ # START_UP is the variable used in grass.py, grass.sh.in and grass.bat.in
+ set(START_UP ${PROJECT_NAME_LOWER})
+ if(WIN32)
+-  set(START_UP "${START_UP}.py")
++  set(START_UP "${START_UP}_main.py")
+   set(script_file_name "grass.bat")
+   set(script_input_file_name ${script_file_name}.in)
+ else()
 @@ -50,16 +50,38 @@
  
  # configure and install grass.py
@@ -8,32 +17,32 @@
 +if(WIN32)
 +message("win-startup 1: ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP}")
 +  configure_file(grass.py ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP} @ONLY)
- 
--set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
--configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
--unset(GRASS_PYDIR)
++
 +  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
 +  message("win-startup 2: ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}")
 +  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
 +  unset(GRASS_PYDIR)
- 
--install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
--        DESTINATION ${CMAKE_INSTALL_BINDIR})
++
 +  message("win-startup 3: ${GRASS_INSTALL_ETCDIR}")
 +  install(PROGRAMS ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP}
 +	  DESTINATION ${GRASS_INSTALL_ETCDIR})
 +else()
 +  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
  
--file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
+-set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
+-configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
+-unset(GRASS_PYDIR)
 +  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
 +  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
 +  unset(GRASS_PYDIR)
-+
+ 
+-install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
+-        DESTINATION ${CMAKE_INSTALL_BINDIR})
 +  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
 +          DESTINATION ${CMAKE_INSTALL_BINDIR})
 +endif()
-+
+ 
+-file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
 +if(WIN32)
 +  file(TO_NATIVE_PATH "${GISBASE_DIR}" gisbase_init_dir)
 +
