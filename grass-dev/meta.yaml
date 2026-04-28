@@ -6,6 +6,8 @@ package:
 
 source:
   git_url: https://github.com/OSGeo/grass.git
+  patches:
+    - patches/test.patch
 
 build:
   number: 0
