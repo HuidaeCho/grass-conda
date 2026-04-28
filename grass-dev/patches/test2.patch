@@ -1,5 +1,5 @@
 --- cmake/modules/build_script_in_subdir.cmake.orig	2026-04-27 18:39:39.717681210 -0600
-+++ cmake/modules/build_script_in_subdir.cmake	2026-04-27 19:22:03.277658852 -0600
++++ cmake/modules/build_script_in_subdir.cmake	2026-04-27 20:58:15.590879489 -0600
 @@ -15,24 +15,28 @@
      ""
      ${ARGN})
@@ -45,3 +45,11 @@
    add_custom_command(
      OUTPUT ${TRANSLATE_C_FILE}
      COMMAND
+@@ -100,6 +106,7 @@
+ 
+   endif() # WITH_DOCS
+ 
++  message("===== locale 7: ${G_NAME} DEPENDS ${TRANSLATE_C_FILE} ${out_html_file} =====")
+   add_custom_target(${G_NAME} DEPENDS ${TRANSLATE_C_FILE} ${out_html_file})
+ 
+   set(modules_list
