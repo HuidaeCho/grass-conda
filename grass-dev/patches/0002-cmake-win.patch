@@ -1,19 +1,25 @@
 --- lib/init/CMakeLists.txt.orig	2026-02-28 12:44:59.279405329 -0700
-+++ lib/init/CMakeLists.txt	2026-04-28 07:31:01.171223158 -0600
-@@ -50,7 +50,11 @@
++++ lib/init/CMakeLists.txt	2026-04-28 11:05:38.255399605 -0600
+@@ -50,17 +50,29 @@
  
  # configure and install grass.py
  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_RUNTIME_PATH})
 -configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
-+if(WIN32)
++f(WIN32)
++message("win-startup 1: ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP}")
 +  configure_file(grass.py ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP} @ONLY)
 +else()
 +  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
 +endif()
  
  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
++message("win-startup 2: ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}")
  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
-@@ -61,6 +65,11 @@
+ unset(GRASS_PYDIR)
+ 
++message("win-startup 3: ${CMAKE_INSTALL_BINDIR}")
+ install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
+         DESTINATION ${CMAKE_INSTALL_BINDIR})
  
  file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
  
