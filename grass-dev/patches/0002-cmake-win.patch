@@ -1,6 +1,6 @@
 --- lib/init/CMakeLists.txt.orig	2026-02-28 12:44:59.279405329 -0700
-+++ lib/init/CMakeLists.txt	2026-04-28 12:24:52.063063347 -0600
-@@ -50,17 +50,29 @@
++++ lib/init/CMakeLists.txt	2026-04-28 13:19:15.068378090 -0600
+@@ -50,17 +50,32 @@
  
  # configure and install grass.py
  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_RUNTIME_PATH})
@@ -25,7 +25,10 @@
  
 +if(WIN32)
 +  set(GRASS_PYTHON ${PYTHON_EXECUTABLE})
++message("win-startup 4: ${CMAKE_INSTALL_BINDIR}/${script_file_name}")
 +  configure_file(${script_input_file_name} ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name} @ONLY)
++  install(PROGRAMS ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name}
++          DESTINATION ${CMAKE_INSTALL_BINDIR})
 +endif()
 +
  file(TO_NATIVE_PATH ${OUTDIR}/${GRASS_INSTALL_BINDIR} grass_dll_dir)
