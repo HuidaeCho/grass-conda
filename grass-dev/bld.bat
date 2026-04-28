@@ -11,4 +11,6 @@ if errorlevel 1 exit /b 1
 
 echo "===== after install ====="
 echo PREFIX=%PREFIX%
-dir /s /b %PREFIX% | findstr grass
+dir /s /b %PREFIX%
+
+type %PREFIX%\Library\bin\grass.bat
