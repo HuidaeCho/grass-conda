@@ -34,10 +34,13 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   <h1>grass-conda</h1>
   <p>Welcome to the grass-conda channel! This channel provides conda packages
   for <a href="https://grass.osgeo.org/">GRASS</a>, built from source as of
-  {now}.</p>
+  {now}. It provides daily development snapshots. For official release conda
+  packages, visit <a href="https://anaconda.org/channels/conda-forge/packages/grass/overview">here</a>.</p>
   <ul>
 {items}
   </ul>
+  <p><b>grass</b> is the latest release (not available yet for Windows) and
+  <b>grass-dev</b> is a daily development snapshot.</p>
   <p>See the <a href="https://github.com/HuidaeCho/grass-conda">GitHub
   repository</a> for recipes, CI workflows, and build details.</p>
 
@@ -55,7 +58,6 @@ curl -L https://micro.mamba.pm/install.sh | env \\
 source ~/.bashrc
 
 # install GRASS (c-compiler for g.extension)
-# grass is the latest release and grass-dev is a daily development snapshot
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
 # run GRASS
@@ -80,8 +82,6 @@ rem initialize micromamba
 micromamba shell init --shell cmd.exe
 
 rem install GRASS (c-compiler for g.extension); type micromamba, NOT micromamba.exe
-rem grass is the latest release (not available yet for Windows) and
-rem grass-dev is a daily development snapshot
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
 rem run GRASS

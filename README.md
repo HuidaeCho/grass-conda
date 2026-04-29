@@ -1,7 +1,14 @@
 # GRASS Conda Packages
 
 This repository contains conda recipes for [GRASS](https://grass.osgeo.org/)
-and hosts pre-built packages at https://grass-conda.isnew.info/. On Linux and
+and hosts pre-built daily development packages at
+https://grass-conda.isnew.info/. For official release conda packages, visit
+[here](https://anaconda.org/channels/conda-forge/packages/grass/overview).
+
+**grass** is the latest release (not available yet for Windows) and
+**grass-dev** is a daily development snapshot.
+
+On Linux and
 macOS, you can install the GRASS conda package using the following commands:
 ```bash
 # install micromamba
@@ -14,7 +21,6 @@ curl -L https://micro.mamba.pm/install.sh | env \
 source ~/.bashrc
 
 # install GRASS (c-compiler for g.extension)
-# grass is the latest release and grass-dev is a daily development snapshot
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
 # run GRASS
@@ -38,8 +44,6 @@ rem initialize micromamba
 micromamba shell init --shell cmd.exe
 
 rem install GRASS (c-compiler for g.extension); type micromamba, NOT micromamba.exe
-rem grass is the latest release (not available yet for Windows) and
-rem grass-dev is a daily development snapshot
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
 rem run GRASS
