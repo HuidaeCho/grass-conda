@@ -56,7 +56,7 @@ source ~/.bashrc
 
 # install GRASS (c-compiler for g.extension)
 # grass is the latest release and grass-dev is a daily development snapshot
-micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
+micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
 # run GRASS
 micromamba run -n grass grass
@@ -82,7 +82,7 @@ micromamba shell init --shell cmd.exe
 rem install GRASS (c-compiler for g.extension); type micromamba, NOT micromamba.exe
 rem grass is the latest release (not available yet for Windows) and
 rem grass-dev is a daily development snapshot
-micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
+micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
 rem run GRASS
 micromamba run -n grass grass
