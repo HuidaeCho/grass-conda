@@ -9,6 +9,7 @@ source:
   patches:
     - patches/0001-cmake-gui-scripts.patch
     - patches/0002-cmake-win.patch
+    - patches/0003-remote-decision-using-source-url.patch
 
 build:
   number: 0
