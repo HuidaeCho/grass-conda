@@ -8,3 +8,9 @@ if errorlevel 1 exit /b 1
 
 cmake --install build --config Release
 if errorlevel 1 exit /b 1
+
+echo "===== Installed Files ====="
+dir /s /b %PREFIX%
+
+echo "===== grass.bat ====="
+type %PREFIX%\Library\bin\grass.bat
