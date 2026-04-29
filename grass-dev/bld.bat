@@ -12,5 +12,6 @@ if errorlevel 1 exit /b 1
 echo "===== Installed Files ====="
 dir /s /b %PREFIX%
 
-echo "===== grass.bat ====="
+echo "===== bin/grass.bat ====="
 type %PREFIX%\Library\bin\grass.bat
+echo "===== end of bin/grass.bat ====="
