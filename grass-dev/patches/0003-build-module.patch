@@ -1,17 +1,15 @@
 --- cmake/modules/build_module.cmake.orig	2026-02-28 12:44:59.276405255 -0700
-+++ cmake/modules/build_module.cmake	2026-04-29 08:23:14.494654033 -0600
-@@ -85,11 +85,11 @@
++++ cmake/modules/build_module.cmake	2026-04-29 16:05:25.527961442 -0600
+@@ -274,9 +274,9 @@
+     install(
+       TARGETS ${G_NAME}
+       EXPORT ${_libname}Targets
+-      LIBRARY DESTINATION ${install_dest}
+-      ARCHIVE DESTINATION ${install_dest}
+-      RUNTIME DESTINATION ${G_RUNTIME_OUTPUT_DIR}
++      LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
++      ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
++      RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+       INCLUDES
+       DESTINATION ${GRASS_INSTALL_INCLUDEDIR})
  
-   set(install_dest "")
-   if(NOT G_RUNTIME_OUTPUT_DIR)
--    if(G_EXE)
--      set(G_RUNTIME_OUTPUT_DIR "${OUTDIR}/${GRASS_INSTALL_BINDIR}")
-+    if(G_EXE OR WIN32)
-+      set(G_RUNTIME_OUTPUT_DIR "${GRASS_INSTALL_BINDIR}")
-       set(install_dest "${GRASS_INSTALL_BINDIR}")
-     else()
--      set(G_RUNTIME_OUTPUT_DIR "${OUTDIR}/${GRASS_INSTALL_LIBDIR}")
-+      set(G_RUNTIME_OUTPUT_DIR "${GRASS_INSTALL_LIBDIR}")
-       set(install_dest "${GRASS_INSTALL_LIBDIR}")
-     endif()
-   else()
