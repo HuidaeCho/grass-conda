@@ -9,7 +9,4 @@ cmake --install build
 
 echo "===== Installed Files ====="
 find $PREFIX
-
-echo "===== bin/grass ====="
-cat $PREFIX/bin/grass
-echo "===== end of bin/grass ====="
+echo "===== End of Installed Files ====="

@@ -14,4 +14,4 @@ dir /s /b %PREFIX%
 
 echo "===== bin/grass.bat ====="
 type %PREFIX%\Library\bin\grass.bat
-echo "===== end of bin/grass.bat ====="
+echo "===== End of bin/grass.bat ====="
