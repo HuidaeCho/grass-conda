@@ -42,7 +42,8 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   repository</a> for recipes, CI workflows, and build details.</p>
 
   <h2>Install</h2>
-  You can install the GRASS conda package using the following commands:
+  On Linux and macOS, you can install the GRASS conda package using the
+  following commands:
   <pre><code>
 # install micromamba
 curl -L https://micro.mamba.pm/install.sh | env \\
@@ -57,6 +58,30 @@ source ~/.bashrc
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
 
 # run GRASS
+micromamba run -n grass grass
+  </code></pre>
+
+  On Windows,
+  <pre><code>
+rem install micromamba
+mkdir %USERPROFILE%\\local\\bin
+curl -L https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-win-64.exe -o %USERPROFILE%\\local\\bin\\micromamba.exe
+
+rem if %USERPROFILE%\\local\\bin is not in PATH
+set PATH=%USERPROFILE%\\local\\bin;%PATH%
+setx PATH %PATH%
+
+rem set the root prefix of micromamba
+set MAMBA_ROOT_PREFIX=%USERPROFILE%\\opt\\micromamba
+setx MAMBA_ROOT_PREFIX %MAMBA_ROOT_PREFIX%
+
+rem initialize micromamba
+micromamba shell init --shell cmd.exe
+
+rem install GRASS (c-compiler for g.extension); type micromamba, NOT micromamba.exe
+micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
+
+rem run GRASS
 micromamba run -n grass grass
   </code></pre>
 </body>
