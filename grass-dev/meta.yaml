@@ -1,7 +1,7 @@
 {% set version = "dev" %}
 
 package:
-  name: grass
+  name: grass-dev
   version: {{ version }}
 
 source:
