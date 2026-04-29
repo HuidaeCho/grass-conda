@@ -1,159 +1,38 @@
-From 6f3dab0a0949128ecd58a14cd7fef7ce45d6d135 Mon Sep 17 00:00:00 2001
-From: Huidae Cho <grass4u@gmail.com>
-Date: Sat, 20 Sep 2025 14:25:57 -0600
-Subject: [PATCH 1/5] CMake: Create grass.bat and add scripts to PATH
-
----
- lib/init/CMakeLists.txt     | 13 +++++++++++--
- python/grass/app/runtime.py | 10 +++++-----
- 2 files changed, 16 insertions(+), 7 deletions(-)
-
-diff --git a/lib/init/CMakeLists.txt b/lib/init/CMakeLists.txt
-index 6155848d1e9..180543827dc 100644
---- a/lib/init/CMakeLists.txt
-+++ b/lib/init/CMakeLists.txt
-@@ -13,7 +13,7 @@ endif()
+--- lib/init/CMakeLists.txt.orig	2026-02-28 12:44:59.279405329 -0700
++++ lib/init/CMakeLists.txt	2026-04-28 18:09:25.531257164 -0600
+@@ -27,7 +27,7 @@
  # START_UP is the variable used in grass.py, grass.sh.in and grass.bat.in
  set(START_UP ${PROJECT_NAME_LOWER})
  if(WIN32)
 -  set(START_UP "${START_UP}.py")
-+  set(START_UP "${START_UP}${GRASS_VERSION_NUMBER}.py")
++  set(START_UP "${START_UP}_main.py")
    set(script_file_name "grass.bat")
    set(script_input_file_name ${script_file_name}.in)
  else()
-@@ -36,7 +36,11 @@ list(APPEND DLL_PATH_LIST ${DEPS_DLL_PATH})
+@@ -50,16 +50,32 @@
  
  # configure and install grass.py
  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_RUNTIME_PATH})
 -configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
 +if(WIN32)
 +  configure_file(grass.py ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP} @ONLY)
-+else()
-+  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
-+endif()
- 
- set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
- configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
-@@ -47,6 +51,11 @@ install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
- 
- file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
- 
-+if(WIN32)
-+  set(GRASS_PYTHON ${PYTHON_EXECUTABLE})
-+  configure_file(${script_input_file_name} ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name} @ONLY)
-+endif()
 +
- file(TO_NATIVE_PATH ${OUTDIR}/${GRASS_INSTALL_BINDIR} grass_dll_dir)
- set(DLL_PATH_LIST)
- list(APPEND DLL_PATH_LIST ${grass_dll_dir})
-diff --git a/python/grass/app/runtime.py b/python/grass/app/runtime.py
-index a1df09659ed..b225aabafff 100644
---- a/python/grass/app/runtime.py
-+++ b/python/grass/app/runtime.py
-@@ -131,11 +131,11 @@ def append_left_main_executable_paths(paths, install_path):
-         path = os.path.join(install_path, "extrabin")
-         if os.path.exists(path):
-             paths.appendleft(path)
--    else:
--        # Without FHS, scripts are separated like in the source code.
--        path = os.path.join(install_path, "scripts")
--        if os.path.exists(path):
--            paths.appendleft(path)
++  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
++  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
++  unset(GRASS_PYDIR)
 +
-+    # Without FHS, scripts are separated like in the source code.
-+    path = os.path.join(install_path, "scripts")
-+    if os.path.exists(path):
-+        paths.appendleft(path)
- 
- 
- def append_left_addon_paths(paths, config_dir, env):
-
-From 00e0d107bb99dbb72e55c4e3afe24f6aa001a8f3 Mon Sep 17 00:00:00 2001
-From: Huidae Cho <grass4u@gmail.com>
-Date: Tue, 28 Apr 2026 06:56:05 -0600
-Subject: [PATCH 2/5] Use grass_main.py instead of grass${VERSION}.py
-
----
- lib/init/CMakeLists.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/lib/init/CMakeLists.txt b/lib/init/CMakeLists.txt
-index 180543827dc..dfee271dd5c 100644
---- a/lib/init/CMakeLists.txt
-+++ b/lib/init/CMakeLists.txt
-@@ -13,7 +13,7 @@ endif()
- # START_UP is the variable used in grass.py, grass.sh.in and grass.bat.in
- set(START_UP ${PROJECT_NAME_LOWER})
- if(WIN32)
--  set(START_UP "${START_UP}${GRASS_VERSION_NUMBER}.py")
-+  set(START_UP "${START_UP}_main.py")
-   set(script_file_name "grass.bat")
-   set(script_input_file_name ${script_file_name}.in)
- else()
-
-From 96bd1314ddcac662cc7c1b3007413f4d133d2915 Mon Sep 17 00:00:00 2001
-From: Huidae Cho <grass4u@gmail.com>
-Date: Tue, 28 Apr 2026 07:34:56 -0600
-Subject: [PATCH 3/5] Apply suggestion from @github-actions[bot]
-
-Co-authored-by: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
----
- python/grass/app/runtime.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/python/grass/app/runtime.py b/python/grass/app/runtime.py
-index 62d1e809a67..7c53f3f4a73 100644
---- a/python/grass/app/runtime.py
-+++ b/python/grass/app/runtime.py
-@@ -227,7 +227,7 @@ def append_left_main_executable_paths(paths, install_path):
- 
-     # Without FHS, scripts are separated like in the source code.
-     path = os.path.join(install_path, "scripts")
--    if os.path.exists(path):
-+    if Path(path).exists():
-         paths.appendleft(path)
- 
- 
-
-From 80c8d045fce079086fc9c3a4faea09cd4bfe2469 Mon Sep 17 00:00:00 2001
-From: Huidae Cho <grass4u@gmail.com>
-Date: Tue, 28 Apr 2026 18:23:01 -0600
-Subject: [PATCH 4/5] Install grass.bat in the correct path
-
----
- lib/init/CMakeLists.txt | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
-
-diff --git a/lib/init/CMakeLists.txt b/lib/init/CMakeLists.txt
-index 1dbe583b1f1..c419573dab5 100644
---- a/lib/init/CMakeLists.txt
-+++ b/lib/init/CMakeLists.txt
-@@ -52,22 +52,29 @@ list(APPEND DLL_PATH_LIST ${DEPS_DLL_PATH})
- set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_RUNTIME_PATH})
- if(WIN32)
-   configure_file(grass.py ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP} @ONLY)
--else()
--  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
--endif()
++  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
++	  DESTINATION ${GRASS_INSTALL_ETCDIR})
  
 -set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
 -configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
 -unset(GRASS_PYDIR)
-+  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
-+  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
-+  unset(GRASS_PYDIR)
++  file(TO_NATIVE_PATH ${GISBASE_DIR} gisbase_init_dir)
  
 -install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
 -        DESTINATION ${CMAKE_INSTALL_BINDIR})
-+  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
-+	  DESTINATION ${GRASS_INSTALL_ETCDIR})
- 
--file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
-+  file(TO_NATIVE_PATH ${GISBASE_DIR} gisbase_init_dir)
- 
--if(WIN32)
-   set(GRASS_PYTHON ${PYTHON_EXECUTABLE})
-   configure_file(${script_input_file_name} ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name} @ONLY)
++  set(GRASS_PYTHON ${PYTHON_EXECUTABLE})
++  configure_file(${script_input_file_name} ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name} @ONLY)
 +  install(PROGRAMS ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name}
 +          DESTINATION ${CMAKE_INSTALL_BINDIR})
 +else()
@@ -162,28 +41,17 @@ index 1dbe583b1f1..c419573dab5 100644
 +  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
 +  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
 +  unset(GRASS_PYDIR)
-+
+ 
+-file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
 +  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
 +          DESTINATION ${CMAKE_INSTALL_BINDIR})
- endif()
++endif()
  
  file(TO_NATIVE_PATH ${OUTDIR}/${GRASS_INSTALL_BINDIR} grass_dll_dir)
-
-From 4a9a920a903e9e2af958b39c39dd0cda725ebbb2 Mon Sep 17 00:00:00 2001
-From: Huidae Cho <grass4u@gmail.com>
-Date: Tue, 28 Apr 2026 18:24:17 -0600
-Subject: [PATCH 5/5] Use %~dp0 rather than a full path in grass.bat.in for
- custom install path
-
----
- lib/init/grass.bat.in | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/lib/init/grass.bat.in b/lib/init/grass.bat.in
-index 94399d1340c..5d24dfc8b9b 100644
---- a/lib/init/grass.bat.in
-+++ b/lib/init/grass.bat.in
-@@ -11,14 +11,14 @@ set GEOTIFF_CSV=@GEOTIFF_CSV@
+ set(DLL_PATH_LIST)
+--- lib/init/grass.bat.in.orig	2025-07-18 06:56:39.193870057 -0600
++++ lib/init/grass.bat.in	2026-04-28 18:20:44.353116632 -0600
+@@ -11,14 +11,14 @@
  
  ::set FONTCONFIG_FILE=%GISBASE%\etc\fonts.conf
  
@@ -202,3 +70,22 @@ index 94399d1340c..5d24dfc8b9b 100644
  
 -"@GRASS_PYTHON@" "@gisbase_init_dir@\etc\@START_UP@" %*
 +"@GRASS_PYTHON@" "%GISBASE%\etc\@START_UP@" %*
+--- python/grass/app/runtime.py.orig	2026-04-28 18:49:53.693693626 -0600
++++ python/grass/app/runtime.py	2026-04-28 18:49:57.631785456 -0600
+@@ -224,11 +224,11 @@
+         path = os.path.join(install_path, "extrabin")
+         if Path(path).exists():
+             paths.appendleft(path)
+-    else:
+-        # Without FHS, scripts are separated like in the source code.
+-        path = os.path.join(install_path, "scripts")
+-        if Path(path).exists():
+-            paths.appendleft(path)
++
++    # Without FHS, scripts are separated like in the source code.
++    path = os.path.join(install_path, "scripts")
++    if Path(path).exists():
++        paths.appendleft(path)
+ 
+ 
+ def append_left_addon_paths(paths, config_dir, env):
