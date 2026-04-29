@@ -19,7 +19,7 @@ micromamba create -n grass -yc https://grass-conda.isnew.info/ grass c-compiler
 # run GRASS
 micromamba run -n grass grass
 ```
-On Windows CMD.exe (still NOT working),
+On Windows CMD.exe,
 ```cmd
 rem install micromamba
 mkdir %USERPROFILE%\local\bin
