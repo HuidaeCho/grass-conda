@@ -91,6 +91,12 @@ micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compi
 rem run GRASS
 micromamba run -n grass grass
   </code></pre>
+
+  <h2>Acknowledgments</h2>
+  <p>The modernization of the GRASS build system, including the transition to
+  CMake, Windows MSVC support, and conda packaging, is supported in part by the
+  National Science Foundation (NSF) POSE program
+  <a href="https://www.nsf.gov/awardsearch/show-award/?AWD_ID=2303651">award 2303651</a>.</p>
 </body>
 </html>
 """
