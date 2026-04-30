@@ -20,10 +20,6 @@ curl -L https://micro.mamba.pm/install.sh | env \
 # source micromamba
 source ~/.bashrc
 
-# setup conda-forge
-micromamba config append channels conda-forge,nodefaults
-micromamba config set channel_priority strict
-
 # install GRASS (c-compiler for g.extension)
 micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compiler
 
