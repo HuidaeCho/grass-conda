@@ -8,8 +8,7 @@ https://grass-conda.isnew.info/. For official release conda packages, visit
 **grass** is the latest release (not available yet for Windows) and
 **grass-dev** is a daily development snapshot.
 
-On Linux and
-macOS, you can install the GRASS conda package using the following commands:
+On Linux and macOS:
 ```bash
 # install micromamba
 curl -L https://micro.mamba.pm/install.sh | env \
@@ -26,7 +25,7 @@ micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compi
 # run GRASS
 micromamba run -n grass grass
 ```
-On Windows CMD.exe,
+On Windows CMD.exe:
 ```cmd
 rem install micromamba
 mkdir %USERPROFILE%\local\bin

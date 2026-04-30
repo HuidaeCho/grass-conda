@@ -46,8 +46,7 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   repository</a> for recipes, CI workflows, and build details.</p>
 
   <h2>Install</h2>
-  On Linux and macOS, you can install the GRASS conda package using the
-  following commands:
+  On Linux and macOS:
   <pre><code>
 # install micromamba
 curl -L https://micro.mamba.pm/install.sh | env \\
@@ -65,7 +64,7 @@ micromamba create -n grass -yc https://grass-conda.isnew.info/ grass-dev c-compi
 micromamba run -n grass grass
   </code></pre>
 
-  On Windows CMD.exe,
+  On Windows CMD.exe:
   <pre><code>
 rem install micromamba
 mkdir %USERPROFILE%\\local\\bin
