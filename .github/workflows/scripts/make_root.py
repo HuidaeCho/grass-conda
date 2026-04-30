@@ -32,7 +32,7 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
 </head>
 <body>
   <h1>grass-conda</h1>
-  <img src="https://grass.osgeo.org/images/logos/grass-horizontal/grass-logo-green-horizontal@1x.png" width="512">
+  <img src="https://grass.osgeo.org/images/logos/grass-horizontal/grass-green-horizontal.svg" width="512">
   <p>Welcome to the grass-conda channel! This channel provides conda packages
   for <a href="https://grass.osgeo.org/">GRASS</a>, built from source as of
   {now}. It provides daily development snapshots. For official release conda
