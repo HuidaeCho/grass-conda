@@ -1,0 +1,44 @@
+[project]
+authors = [{name = "Gregory Power", email = "31050507+gregorywaynepower@users.noreply.github.com"}]
+dependencies = []
+name = "grass-conda"
+requires-python = ">= 3.11"
+version = "0.1.0"
+
+[build-system]
+build-backend = "hatchling.build"
+requires = ["hatchling"]
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[tool.pixi.pypi-dependencies]
+grass_conda = { path = ".", editable = true }
+
+[tool.pixi.tasks]
+pwd = { cmd = ["echo", "%USERPROFILE%\\AppData\\Local\\Temp"] }
+remove-temp = { cmd = ["rm", "-rI", "please_delete"] }
+create-opt = { cmd = ["mkdir", "opt"] , cwd = "C:\\"}
+clone-grass = { cmd = ["git", "clone", "https://github.com/OSGeo/grass.git", "opt\\grass"]}
+make-build-dir = { cmd = ["mkdir", "opt\\grass\\build"] }
+build-grass = { cmd = ["cmake", "opt\\grass\\build", "-DWITH_OPENGL=OFF", ">", "opt\\grass\\build\\cmake.log"] }
+start-msbuildbat = { cmd = "VsDevCmd.bat", cwd = 'C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\Common7\Tools\' }
+start-msbuild = { cmd = "MSBuild.exe", cwd = "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\MSBuild\\Current\\Bin\\amd64\\" }
+
+[tool.pixi.target.win-64.dependencies]
+cmake = ">=4.0.2,<5"
+pkg-config = ">=0.29.2,<0.30"
+winflexbison = ">=2.5.25,<3"
+proj = ">=9.6.0,<10"
+libgdal = ">=3.10.3,<4"
+pcre = ">=8.45,<9"
+fftw = ">=3.3.10,<4"
+openblas = ">=0.3.29,<0.4"
+pdal = ">=2.8.4,<3"
+wxpython = ">=4.2.3,<5"
+pywin32 = ">=307,<308"
+git = ">=2.49.0,<3"
+vs2022_win-64 = ">=19.43.34604,<20"
+
+[tool.pixi.dependencies]
