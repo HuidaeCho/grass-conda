@@ -9,7 +9,6 @@ source:
   patches:
     - patches/0001-cmake-gui-scripts.patch
     - patches/0002-cmake-win.patch
-    - patches/0003-cmake-module-install-paths.patch
 
 build:
   number: 0
