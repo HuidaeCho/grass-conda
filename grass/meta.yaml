@@ -10,6 +10,7 @@ source:
   sha256: {{ sha256 }}
   patches:
     - patches/0001-cmake-win.patch
+    - patches/0002-remote-decision-using-source-url.patch
 
 build:
   number: 0
