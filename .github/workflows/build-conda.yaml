@@ -53,7 +53,6 @@ jobs:
 
       - name: Build grass package
         id: build_grass
-        if: ${{ matrix.os != 'windows-latest' }}
         shell: bash
         run: |
           micromamba run -n build conda build grass -c conda-forge \
@@ -69,7 +68,7 @@ jobs:
             --variants "{python: ['${{ matrix.python }}']}"
 
       - name: Upload grass artifact
-        if: ${{ always() && matrix.os != 'windows-latest' && steps.build_grass.outcome == 'success' }}
+        if: ${{ always() && steps.build_grass.outcome == 'success' }}
         uses: actions/upload-artifact@v6
         with:
           name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
