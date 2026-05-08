@@ -1,0 +1,91 @@
+--- lib/init/CMakeLists.txt.orig	2026-02-28 12:44:59.279405329 -0700
++++ lib/init/CMakeLists.txt	2026-04-28 18:09:25.531257164 -0600
+@@ -27,7 +27,7 @@
+ # START_UP is the variable used in grass.py, grass.sh.in and grass.bat.in
+ set(START_UP ${PROJECT_NAME_LOWER})
+ if(WIN32)
+-  set(START_UP "${START_UP}.py")
++  set(START_UP "${START_UP}_main.py")
+   set(script_file_name "grass.bat")
+   set(script_input_file_name ${script_file_name}.in)
+ else()
+@@ -50,16 +50,32 @@
+ 
+ # configure and install grass.py
+ set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_RUNTIME_PATH})
+-configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
++if(WIN32)
++  configure_file(grass.py ${OUTDIR}/${GRASS_INSTALL_ETCDIR}/${START_UP} @ONLY)
++
++  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
++  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
++  unset(GRASS_PYDIR)
++
++  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
++	  DESTINATION ${GRASS_INSTALL_ETCDIR})
+ 
+-set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
+-configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
+-unset(GRASS_PYDIR)
++  file(TO_NATIVE_PATH ${GISBASE_DIR} gisbase_init_dir)
+ 
+-install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
+-        DESTINATION ${CMAKE_INSTALL_BINDIR})
++  set(GRASS_PYTHON ${PYTHON_EXECUTABLE})
++  configure_file(${script_input_file_name} ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name} @ONLY)
++  install(PROGRAMS ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${script_file_name}
++          DESTINATION ${CMAKE_INSTALL_BINDIR})
++else()
++  configure_file(grass.py ${OUTDIR}/${CMAKE_INSTALL_BINDIR}/${START_UP} @ONLY)
++
++  set(GRASS_PYDIR ${GRASS_INSTALL_PYDIR_PATH})
++  configure_file(grass.py ${CMAKE_CURRENT_BINARY_DIR}/${START_UP} @ONLY)
++  unset(GRASS_PYDIR)
+ 
+-file(TO_NATIVE_PATH "${OUTDIR}/${GISBASE_DIR}" gisbase_init_dir)
++  install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/${START_UP}
++          DESTINATION ${CMAKE_INSTALL_BINDIR})
++endif()
+ 
+ file(TO_NATIVE_PATH ${OUTDIR}/${GRASS_INSTALL_BINDIR} grass_dll_dir)
+ set(DLL_PATH_LIST)
+--- lib/init/grass.bat.in.orig	2025-07-18 06:56:39.193870057 -0600
++++ lib/init/grass.bat.in	2026-04-28 18:20:44.353116632 -0600
+@@ -11,14 +11,14 @@
+ 
+ ::set FONTCONFIG_FILE=%GISBASE%\etc\fonts.conf
+ 
+-set PATH=@gisbase_init_dir@\bin;@BINARY_DIR@;@DLL_PATH_LIST@;%PATH%
++set GISBASE=%~dp0\..\@gisbase_init_dir@
+ 
+-set GISBASE=@gisbase_init_dir@
++set PATH=%GISBASE%\bin;@BINARY_DIR@;@DLL_PATH_LIST@;%PATH%
+ 
+-set PYTHONPATH=@gisbase_init_dir@\etc\python;@gisbase_init_dir@\gui\wxpython;@gisbase_init_dir@\etc
++set PYTHONPATH=%GISBASE%\etc\python;%GISBASE%\gui\wxpython;%GISBASE%\etc
+ 
+ set GRASS_PYTHON=@GRASS_PYTHON@
+ 
+ set GRASS_CONFIG_DIR=@grass_config_dir@
+ 
+-"@GRASS_PYTHON@" "@gisbase_init_dir@\etc\@START_UP@" %*
++"@GRASS_PYTHON@" "%GISBASE%\etc\@START_UP@" %*
+--- python/grass/app/runtime.py.orig	2026-04-28 18:49:53.693693626 -0600
++++ python/grass/app/runtime.py	2026-04-28 18:49:57.631785456 -0600
+@@ -224,11 +224,11 @@
+         path = os.path.join(install_path, "extrabin")
+         if Path(path).exists():
+             paths.appendleft(path)
+-    else:
+-        # Without FHS, scripts are separated like in the source code.
+-        path = os.path.join(install_path, "scripts")
+-        if Path(path).exists():
+-            paths.appendleft(path)
++
++    # Without FHS, scripts are separated like in the source code.
++    path = os.path.join(install_path, "scripts")
++    if Path(path).exists():
++        paths.appendleft(path)
+ 
+ 
+ def append_left_addon_paths(paths, config_dir, env):
