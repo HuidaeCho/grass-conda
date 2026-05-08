@@ -57,7 +57,7 @@ requirements:
     - libgomp      # [linux]
     - llvm-openmp  # [osx]
     - python
-    - pywin32       # [win]
+    - pywin32      # [win]
     - wxpython
 
 test:
