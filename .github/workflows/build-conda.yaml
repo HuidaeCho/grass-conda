@@ -5,11 +5,13 @@ on:
     branches: [ main ]
     tags: [ 'v*' ]
     paths:
-      - grass/**
+      - grass-8.4.2/**
+      - grass-8.5.0/**
       - grass-dev/**
   pull_request:
     paths:
-      - grass/**
+      - grass-8.4.2/**
+      - grass-8.5.0/**
       - grass-dev/**
   workflow_dispatch:
   schedule:
@@ -23,6 +25,10 @@ jobs:
       matrix:
         os: [ ubuntu-latest, macos-latest, macos-15-intel, windows-latest ]
         python: [ '3.10', '3.11', '3.12', '3.13', '3.14' ]
+        package:
+          - grass-8.4.2
+          - grass-8.5.0
+          - grass-dev
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -51,35 +57,20 @@ jobs:
           micromamba run -n build conda config --set channel_priority strict
           micromamba run -n build conda config --add channels conda-forge
 
-      - name: Build grass package
-        id: build_grass
+      - name: Build ${{ matrix.package }} package
+        id: build_package
         shell: bash
         run: |
-          micromamba run -n build conda build grass -c conda-forge \
-            --output-folder grass-conda \
+          micromamba run -n build conda build ${{ matrix.package }} -c conda-forge \
+            --output-folder ${{ matrix.package }}-conda \
             --variants "{python: ['${{ matrix.python }}']}"
 
-      - name: Build grass-dev package
-        id: build_grass_dev
-        shell: bash
-        run: |
-          micromamba run -n build conda build grass-dev -c conda-forge \
-            --output-folder grass-dev-conda \
-            --variants "{python: ['${{ matrix.python }}']}"
-
-      - name: Upload grass artifact
+      - name: Upload ${{ matrix.package }} artifact
         if: ${{ always() && steps.build_grass.outcome == 'success' }}
         uses: actions/upload-artifact@v6
         with:
-          name: grass-conda-${{ matrix.os }}-py${{ matrix.python }}
-          path: grass-conda
-
-      - name: Upload grass-dev artifact
-        if: ${{ always() && steps.build_grass_dev.outcome == 'success' }}
-        uses: actions/upload-artifact@v6
-        with:
-          name: grass-dev-conda-${{ matrix.os }}-py${{ matrix.python }}
-          path: grass-dev-conda
+          name: ${{ matrix.package }}-conda-${{ matrix.os }}-py${{ matrix.python }}
+          path: ${{ matrix.package }}-conda
 
   package:
     name: Package conda artifacts
@@ -116,7 +107,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p grass-conda
-          for d in artifacts/grass-*conda-*; do
+          for d in artifacts/*-conda-*; do
             echo "Merging $d"
             rsync -a $d/ grass-conda/
           done
