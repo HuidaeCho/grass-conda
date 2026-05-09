@@ -9,8 +9,8 @@ source:
   url: https://github.com/OSGeo/grass/releases/download/{{ version }}/grass-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - patches/0001-autoconf-cross-compile-file-checks.patch
-    - patches/0002-g-mkfontcap-cross-compile-skip.patch
+    - patches/6895-autoconf-cross-compile-file-checks.patch
+    - patches/6896-g-mkfontcap-cross-compile-skip.patch
 
 build:
   number: 3
