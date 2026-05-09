@@ -8,18 +8,20 @@ on:
       - grass-8.4.2/**
       - grass-8.5.0/**
       - grass-dev/**
+      - .github/workflows/build-conda.yaml
   pull_request:
     paths:
       - grass-8.4.2/**
       - grass-8.5.0/**
       - grass-dev/**
+      - .github/workflows/build-conda.yaml
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *' # daily at 00:00 UTC
 
 jobs:
   build:
-    name: Build conda packages
+    name: Build ${{ matrix.package }} (${{ matrix.os }}, py${{ matrix.python }})
     strategy:
       fail-fast: false
       matrix:
@@ -66,7 +68,7 @@ jobs:
             --variants "{python: ['${{ matrix.python }}']}"
 
       - name: Upload ${{ matrix.package }} artifact
-        if: ${{ always() && steps.build_grass.outcome == 'success' }}
+        if: ${{ always() && steps.build_package.outcome == 'success' }}
         uses: actions/upload-artifact@v6
         with:
           name: ${{ matrix.package }}-conda-${{ matrix.os }}-py${{ matrix.python }}
