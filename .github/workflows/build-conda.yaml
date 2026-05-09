@@ -45,16 +45,9 @@ jobs:
         with:
           micromamba-version: latest
           environment-name: build
-          create-args: >-
-            conda-build
+          create-args: conda-build
           cache-environment: true
           cache-downloads: true
-
-      - name: Configure micromamba
-        shell: bash
-        run: |
-          micromamba run -n build conda config --set channel_priority strict
-          micromamba run -n build conda config --add channels conda-forge
 
       - name: Check whether package already exists
         id: check_package
@@ -154,8 +147,7 @@ jobs:
         with:
           micromamba-version: latest
           environment-name: index
-          create-args: >-
-            conda-index
+          create-args: conda-index
           cache-environment: true
           cache-downloads: true
 
