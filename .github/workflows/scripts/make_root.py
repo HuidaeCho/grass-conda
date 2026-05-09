@@ -40,8 +40,8 @@ def write_index_html(site: Path, subdirs: list[str]) -> None:
   <ul>
 {items}
   </ul>
-  <p><b>grass</b> is the latest release (not available yet for Windows) and
-  <b>grass-dev</b> is a daily development snapshot.</p>
+  <p><b>grass</b> is the latest release and <b>grass-dev</b> is a daily
+  development snapshot.</p>
   <p>See the <a href="https://github.com/HuidaeCho/grass-conda">GitHub
   repository</a> for recipes, CI workflows, and build details.</p>
 

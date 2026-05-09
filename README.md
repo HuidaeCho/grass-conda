@@ -5,8 +5,8 @@ and hosts pre-built daily development packages at
 https://grass-conda.isnew.info/. For official release conda packages, visit
 [here](https://anaconda.org/channels/conda-forge/packages/grass/overview).
 
-**grass** is the latest release (not available yet for Windows) and
-**grass-dev** is a daily development snapshot.
+**grass** is the latest release and **grass-dev** is a daily development
+snapshot.
 
 On Linux and macOS:
 ```bash
