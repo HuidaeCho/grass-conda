@@ -40,7 +40,7 @@ def package_exists(repodata, package, py_tag, build_number):
         return False
 
     pattern = re.compile(
-        rf"^{re.escape(package)}-{re.escape(py_tag)}.*_{build_number}\.(conda|tar\.bz2)$"
+        rf"^{re.escape(package)}-{re.escape(py_tag)}.*_{build_number}\.conda$"
     )
 
     for section in ("packages.conda", "packages"):
