@@ -71,7 +71,9 @@ def main():
     exists = package_exists(repodata, args.package, py_tag, build_number)
     exists_str = "true" if exists else "false"
 
-    print(f"Checking {path}/{pattern}: {exists_str}")
+    print(f"Checking {repodata_url}")
+    print(f"Package pattern: {args.package}-{py_tag}*_{build_number}.conda")
+    print(f"exists={exists_str}")
 
     if args.output:
         with open(args.output, "a", encoding="utf-8") as f:
