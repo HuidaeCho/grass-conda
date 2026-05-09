@@ -64,6 +64,7 @@ jobs:
 
       - name: Check whether package already exists
         id: check_package
+        if: ${{ matrix.package != 'grass-dev' }}
         shell: bash
         run: |
           python .github/workflows/scripts/check_package_exists.py \
