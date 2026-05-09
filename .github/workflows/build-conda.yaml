@@ -31,6 +31,9 @@ jobs:
           - grass-8.4.2
           - grass-8.5.0
           - grass-dev
+        exclude:
+          - os: windows-latest
+            package: grass-8.4.2
     runs-on: ${{ matrix.os }}
 
     steps:
