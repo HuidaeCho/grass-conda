@@ -50,12 +50,6 @@ jobs:
           cache-environment: true
           cache-downloads: true
 
-      - name: Show micromamba environment
-        shell: bash
-        run: |
-          micromamba info
-          micromamba list
-
       - name: Configure micromamba
         shell: bash
         run: |
@@ -67,12 +61,42 @@ jobs:
         if: ${{ matrix.package != 'grass-dev' }}
         shell: bash
         run: |
-          python .github/workflows/scripts/check_package_exists.py \
-            --channel-url "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
-            --package ${{ matrix.package }} \
-            --os ${{ matrix.os }} \
-            --python ${{ matrix.python }} \
-            --output "$GITHUB_OUTPUT"
+          set -euo pipefail
+
+          case "${{ matrix.os }}" in
+            ubuntu-latest) subdir="linux-64";;
+            macos-latest) subdir="osx-arm64";;
+            macos-15-intel) subdir="osx-64";;
+            windows-latest) subdir="win-64";;
+            *) echo "Unknown platform"; exit 1;;
+          esac
+
+          build_number=$(
+            grep -E '^[[:space:]]*number:[[:space:]]*[0-9]+' \
+              "${{ matrix.package }}/meta.yaml" \
+            | sed -E 's/.*number:[[:space:]]*([0-9]+).*/\1/' \
+            | head -n1
+          )
+          build_number="${build_number:-0}"
+
+          py_tag="py${{ matrix.python }}"
+          py_tag="${py_tag//./}"
+
+          channel_url="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          repodata_url="${channel_url}/${subdir}/repodata.json"
+
+          echo "Checking ${repodata_url}"
+          exists=false
+          if curl -fsSL "$repodata_url" -o repodata.json; then
+            pattern="^${{ matrix.package }}-${py_tag}.*_${build_number}\\.conda$"
+            if jq -r '.["packages.conda"] | keys[]?' repodata.json \
+                | grep -Eq "$pattern"; then
+              exists=true
+            fi
+          fi
+
+          echo "exists=${exists}" >> "$GITHUB_OUTPUT"
+          echo "exists=${exists}"
 
       - name: Build ${{ matrix.package }} package
         id: build_package
@@ -100,12 +124,30 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Checkout existing channel
-        uses: actions/checkout@v6
-        with:
-          ref: gh-pages
-          path: existing-channel
-        continue-on-error: true
+      - name: Restore existing channel
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          CHANNEL_URL="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          mkdir -p grass-conda
+
+          for subdir in linux-64 osx-64 osx-arm64 win-64; do
+            repodata_url="${CHANNEL_URL}/${subdir}/repodata.json"
+
+            if ! curl -fsSL "$repodata_url" -o repodata.json; then
+              echo "No existing repodata for ${subdir}; skipping."
+              continue
+            fi
+
+            mkdir -p "grass-conda/${subdir}"
+
+            jq -r '.["packages.conda"] | keys[]?' repodata.json | while read -r filename; do
+              echo "Downloading ${subdir}/${filename}"
+              curl -fsSL "${CHANNEL_URL}/${subdir}/${filename}" \
+                -o "grass-conda/${subdir}/${filename}"
+            done
+          done
 
       - name: Set up micromamba
         uses: mamba-org/setup-micromamba@v3
@@ -117,12 +159,6 @@ jobs:
           cache-environment: true
           cache-downloads: true
 
-      - name: Show micromamba environment
-        shell: bash
-        run: |
-          micromamba info
-          micromamba list
-
       - name: Download new conda artifacts
         uses: actions/download-artifact@v8
         with:
@@ -131,12 +167,6 @@ jobs:
       - name: Assemble conda channel layout
         shell: bash
         run: |
-          mkdir -p grass-conda
-
-          if [ -d existing-channel ]; then
-            rsync -a existing-channel/ grass-conda/
-          fi
-
           for d in artifacts/*-conda-*; do
             echo "Merging $d"
             rsync -a $d/ grass-conda/
