@@ -5,7 +5,7 @@ package:
   version: {{ version }}
 
 source:
-  git_url: https://github.com/OSGeo/grass.git
+  url: https://github.com/OSGeo/grass/archive/main.tar.gz
   patches:
     - patches/0001-cmake-win.patch
 
