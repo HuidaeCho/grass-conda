@@ -7,7 +7,8 @@ package:
 source:
   url: https://github.com/OSGeo/grass/archive/main.tar.gz
   patches:
-    - patches/0001-cmake-win.patch
+    - patches/6383-cmake-win.patch
+    - patches/7376-win-python-home.patch
 
 build:
   number: 0

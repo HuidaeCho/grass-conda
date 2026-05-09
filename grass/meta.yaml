@@ -9,8 +9,9 @@ source:
   url: https://github.com/OSGeo/grass/releases/download/{{ version }}/grass-{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - patches/0001-cmake-win.patch
-    - patches/0002-remote-decision-using-source-url.patch
+    - patches/6383-cmake-win.patch
+    - patches/7310-remote-decision-using-source-url.patch
+    - patches/7376-win-python-home.patch
 
 build:
   number: 0
