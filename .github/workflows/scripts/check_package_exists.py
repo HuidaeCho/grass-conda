@@ -69,7 +69,6 @@ def main():
     repodata = read_repodata(repodata_url)
 
     exists = package_exists(repodata, args.package, py_tag, build_number)
-    exists = False
     exists_str = "true" if exists else "false"
 
     print(f"Checking {repodata_url}")
