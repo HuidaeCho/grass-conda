@@ -14,7 +14,6 @@ if [ "$CONDA_BUILD_CROSS_COMPILATION" = "1" ]; then
 
 	./configure \
 		--host="$BUILD" \
-		--with-geos \
 		--without-cairo \
 		--without-fftw \
 		--without-freetype \
@@ -62,6 +61,7 @@ esac
 	--prefix="$PREFIX" \
 	--with-blas \
 	--with-bzlib \
+	--with-geos \
 	--with-lapack \
 	--with-nls \
 	--with-openmp \
